@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+
 /*!
  *
  *  Web Starter Kit
@@ -78,6 +82,17 @@
       console.error('Error during service worker registration:', e);
     });
   }
-
-  // Your custom JavaScript goes here
+  const HelloMessage = React.createClass({
+    displayName: 'HelloMessage',
+    render() {
+      return React.createElement(
+        'div',
+        null,
+        'Hello ',
+        this.props.name
+      );
+    }
+  });
+  ReactDOM.render(React.createElement(HelloMessage, { name: 'World' }),
+    document.getElementById('root'));
 })();

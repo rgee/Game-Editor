@@ -32,6 +32,11 @@ import browserSync from 'browser-sync';
 import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
+import rollup from 'gulp-rollup';
+import replace from 'rollup-plugin-replace';
+import resolveNodeModules from 'rollup-plugin-node-resolve';
+import convertCommonJS from 'rollup-plugin-commonjs';
+import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
 const $ = gulpLoadPlugins();
@@ -105,24 +110,68 @@ gulp.task('styles', () => {
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () =>
-    gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
-      './app/scripts/main.js'
-      // Other scripts
-    ])
-      .pipe($.newer('.tmp/scripts'))
-      .pipe($.sourcemaps.init())
-      .pipe($.babel())
-      .pipe($.sourcemaps.write())
-      .pipe(gulp.dest('.tmp/scripts'))
-      .pipe($.concat('main.min.js'))
-      .pipe($.uglify({preserveComments: 'some'}))
-      // Output files
-      .pipe($.size({title: 'scripts'}))
-      .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('dist/scripts'))
+  gulp.src([
+    './app/scripts/main.js'
+  ])
+  .pipe(rollup({
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['es2015-rollup']
+      }),
+      resolveNodeModules({ jsnext: true }),
+      convertCommonJS(),
+      
+      // https://github.com/rollup/rollup/issues/487
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      })
+    ]
+  }))
+  .pipe(gulp.dest('./.tmp/scripts/'))
+  // gulp.src([
+  //   './app/scripts/main.js'
+  // ])
+  // .pipe(gulpRollup({
+  // }))
+  // .pipe(gulp.dest('./.tmp/scripts/'))
+  // rollup({
+  //   entry: 'app/scripts/main.js',
+  //   plugins: [
+  //     babel({
+  //       exclude: 'node_modules/**',
+  //       presets: ['es2015-rollup']
+  //     })
+  //   ]
+  // }).then(function (bundle) {
+  //   return bundle.write({
+  //     format: 'iife',
+  //     dest: './.tmp/scripts/main.js'
+  //   });
+  //   // return bundle.write({
+  //   //   format: 'iife',
+  //   //   dest: 'dist/scripts/main.js'
+  //   // })
+  // })
+
+    // gulp.src([
+    //   // Note: Since we are not using useref in the scripts build pipeline,
+    //   //       you need to explicitly list your scripts here in the right order
+    //   //       to be correctly concatenated
+    //   './app/scripts/main.js'
+    //   // Other scripts
+    // ])
+    //   .pipe($.newer('.tmp/scripts'))
+    //   .pipe($.sourcemaps.init())
+    //    .pipe($.babel())
+    //   .pipe($.sourcemaps.write())
+    //   .pipe(gulp.dest('.tmp/scripts'))
+    //   .pipe($.concat('main.min.js'))
+    //   .pipe($.uglify({preserveComments: 'some'}))
+    //   // Output files
+    //   .pipe($.size({title: 'scripts'}))
+    //   .pipe($.sourcemaps.write('.'))
+    //   .pipe(gulp.dest('dist/scripts'))
 );
 
 // Scan your HTML for assets & optimize them
