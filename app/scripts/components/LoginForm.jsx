@@ -3,11 +3,12 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 
 class LoginForm extends React.Component {
   render () {
-    const { fields: { email, password}, handleSubmit } = this.props;
+    const { isLoggingIn, fields: { email, password}, handleSubmit } = this.props;
     const actions = [
       <FlatButton
         label="Submit"
@@ -24,14 +25,24 @@ class LoginForm extends React.Component {
           modal={true}
           open={true}
         >
-          <TextField id="email" hintText="Email" {...email} />
-          <br />
-          <TextField id="password" type="password" hintText="Password" {...password} />
+          {
+            isLoggingIn ?
+            <CircularProgress size={1.5} /> :
+            <div>
+              <TextField id="email" hintText="Email" {...email} />
+              <br />
+              <TextField id="password" type="password" hintText="Password" {...password} />
+            </div>
+          }
         </Dialog>
       </div>
     );
   }
 }
+
+LoginForm.propTypes = {
+  isLoggingIn: PropTypes.bool.isRequired
+};
 
 LoginForm = reduxForm({
   form: 'login',
