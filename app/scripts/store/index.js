@@ -1,6 +1,7 @@
 import {applyMiddleware, createStore} from 'redux';
 import initialState from './initialState';
 import rootReducer from '../reducers';
+import thunk from 'redux-thunk';
 
 const logger = store => next => action => {
   console.log('dispatching', action.type, action);
@@ -9,5 +10,5 @@ const logger = store => next => action => {
   return result;
 };
 
-export default applyMiddleware(logger)(createStore)(rootReducer,
+export default applyMiddleware(thunk, logger)(createStore)(rootReducer,
   initialState);

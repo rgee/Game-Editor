@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AuthActions from './actions/authActions';
-import App from './components/App';
+import Main from './components/Main';
+import Store from './store';
+import authActions from './actions/authActions';
 
 /*!
  *
@@ -83,6 +85,8 @@ import App from './components/App';
       console.error('Error during service worker registration:', e);
     });
   }
-  ReactDOM.render(React.createElement(App),
+
+  Store.dispatch(authActions.listenToAuth());
+  ReactDOM.render(React.createElement(Main),
     document.getElementById('root'));
 })();

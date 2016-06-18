@@ -1,26 +1,35 @@
-import React from 'react';
-import { Route } from 'react-router';
-import App from './App';
+import React, { PropTypes } from 'react';
+import { browserHistory, Router, IndexRoute, Route } from 'react-router';
 import Login from './Login';
 import Home from './Home';
+import App from './App';
 
 
 class Routes extends React.Component {
   requireAuth(nextState, replace) {
-    const { auth } = this.context.store.getState();
-    if (auth.state != 'logged_in') {
+    const { isAwaitingAuthDecision, isLoggedIn } = this.props;
+    if (!isAwaitingAuthDecision && !isLoggedIn) {
       replace({
         pathname: '/login'
       });
     }
-  },
+  }
 
   render () {
     return (
-      <Route path="/" component={App} onEnter={this.requireAuth} >
-        <Route path="login" component={Login} />
-        <Route path="home" component={Home} />
-      </Route>
+      <Router history={browserHistory}>
+        <Route path="/" component={App} >
+          <Route path="login" component={Login} />
+          <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)}/>
+        </Route>
+      </Router>
     );
   }
 }
+
+Routes.propTypes = {
+  isAwaitingAuthDecision: React.PropTypes.bool,
+  isLoggedIn: React.PropTypes.bool
+};
+
+export default Routes;

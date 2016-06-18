@@ -1,4 +1,5 @@
 import { Actions } from '../constants';
+import initialState from '../store/initialstate';
 
 export default (currentState, action) => {
   switch (action.type) {
@@ -12,7 +13,12 @@ export default (currentState, action) => {
         state: 'anonymous',
         user: null
       };
+    case Actions.FetchingUser:
+      return {
+        state: 'fetching_user',
+        user: null
+      };
     default:
-      return currentState;
+      return currentState || initialState.auth;
   }
 };
