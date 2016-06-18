@@ -29,7 +29,7 @@ import gulp from 'gulp';
 import del from 'del';
 import util from 'gulp-util';
 import runSequence from 'run-sequence';
-import webpack from 'webpack';
+import webpack from 'webpack-stream';
 import browserSync from 'browser-sync';
 import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
@@ -108,76 +108,61 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('dist/styles'));
 });
 
-// Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
-// to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
-// `.babelrc` file.
-gulp.task('scripts', () =>
-  // gulp.src([
-  //   './app/scripts/main.js'
-  // ])
-  // .pipe(rollup({
-  //   plugins: [
-  //     babel({
-  //       exclude: 'node_modules/**',
-  //       plugins: ['transform-react-jsx'],
-  //       presets: ['es2015-rollup']
-  //     }),
-  //     resolveNodeModules({
-  //       jsnext: true,
-  //       extensions: ['.js', '.jsx']
-  //     }),
-  //     convertCommonJS(),
-  //
-  //     // https://github.com/rollup/rollup/issues/487
-  //     replace({
-  //       'process.env.NODE_ENV': JSON.stringify('production')
-  //     })
-  //   ]
-  // }))
-  // .pipe(gulp.dest('./.tmp/scripts/'))
-  // gulp.src([
-  //   './app/scripts/main.js'
-  // ])
-  // .pipe(gulpRollup({
-  // }))
-  // .pipe(gulp.dest('./.tmp/scripts/'))
-  // rollup({
-  //   entry: 'app/scripts/main.js',
-  //   plugins: [
-  //     babel({
-  //       exclude: 'node_modules/**',
-  //       presets: ['es2015-rollup']
-  //     })
-  //   ]
-  // }).then(function (bundle) {
-  //   return bundle.write({
-  //     format: 'iife',
-  //     dest: './.tmp/scripts/main.js'
-  //   });
-  //   // return bundle.write({
-  //   //   format: 'iife',
-  //   //   dest: 'dist/scripts/main.js'
-  //   // })
-  // })
-
+gulp.task('scripts:prod', () =>
     gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
       './app/scripts/main.js'
-      // Other scripts
     ])
-      .pipe($.newer('.tmp/scripts'))
-      .pipe($.sourcemaps.init())
-       .pipe($.babel())
-      .pipe($.sourcemaps.write())
+      .pipe(webpack({
+        resolve: {
+          extensions: ['', '.js', '.jsx']
+        },
+        module: {
+          loaders: [
+            {
+              test: /.jsx?$/,
+              loader: 'babel-loader',
+              exclude: /node_modules/,
+              query: {
+                presets: ['es2015']
+              }
+            }
+          ]
+        }
+      }))
       .pipe(gulp.dest('.tmp/scripts'))
       .pipe($.concat('main.min.js'))
-      .pipe($.uglify({preserveComments: 'some'}))
+      //.pipe($.uglify({preserveComments: 'some'}))
       // Output files
       .pipe($.size({title: 'scripts'}))
-      .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest('dist/scripts'))
+);
+
+gulp.task('scripts', () =>
+    gulp.src([
+      './app/scripts/main.js'
+    ])
+      .pipe(webpack({
+        devtool: 'source-map',
+        resolve: {
+          extensions: ['', '.js', '.jsx']
+        },
+        output: {
+          filename: 'main.js'
+        },
+        module: {
+          loaders: [
+            {
+              test: /.jsx?$/,
+              loader: 'babel-loader',
+              exclude: /node_modules/,
+              query: {
+                presets: ['es2015']
+              }
+            }
+          ]
+        }
+        }))
+      .pipe(gulp.dest('.tmp/scripts'))
 );
 
 // Scan your HTML for assets & optimize them
@@ -217,41 +202,8 @@ gulp.task('html', () => {
 // Clean output directory
 gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
-gulp.task('webpack', (callback) => {
-  webpack({
-    entry: './app/scripts/main.js',
-    output: {
-      path: '.tmp/scripts',
-      filename: 'main.js'
-    },
-    devtool: 'source-map',
-    resolve: {
-      extensions: ['', '.js', '.jsx']
-    },
-    module: {
-      loaders: [
-        {
-          test: /.jsx?$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          query: {
-            presets: ['es2015']
-          }
-        }
-      ]
-    }
-  }, (err, stats) => {
-    if (err) throw new util.PluginError('webpack', err);
-    util.log('[webpack]', stats.toString({
-      colors: true,
-      progress: true
-    }));
-    callback();
-  })
-});
-
 // Watch files for changes & reload
-gulp.task('serve', ['scripts', 'styles', 'webpack'], () => {
+gulp.task('serve', ['scripts', 'styles'], () => {
   browserSync({
     notify: false,
     // Customize the Browsersync console logging prefix
@@ -266,7 +218,7 @@ gulp.task('serve', ['scripts', 'styles', 'webpack'], () => {
     port: 3000
   });
 
-  gulp.watch(['app/scripts/**/*.{js,jsx}'], ['lint', 'scripts', 'webpack']);
+  gulp.watch(['app/scripts/**/*.{js,jsx}'], ['lint', 'scripts']);
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/images/**/*'], reload);
@@ -292,7 +244,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'html', 'scripts', 'webpack', 'images', 'copy'],
+    ['lint', 'html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     cb
   )

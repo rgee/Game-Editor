@@ -50,7 +50,8 @@
     "run-sequence": "^1.0.1",
     "sw-precache": "^2.2.0",
     "sw-toolbox": "^3.0.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-stream": "^3.2.0"
   },
   "engines": {
     "node": ">=0.12"
