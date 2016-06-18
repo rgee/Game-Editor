@@ -4,6 +4,7 @@ import AuthActions from './actions/authActions';
 import Main from './components/Main';
 import Store from './store';
 import authActions from './actions/authActions';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 /*!
  *
@@ -86,6 +87,10 @@ import authActions from './actions/authActions';
     });
   }
 
+  // Needed for onTouchTap
+  // Check this repo:
+  // https://github.com/zilverline/react-tap-event-plugin
+  injectTapEventPlugin();
   Store.dispatch(authActions.listenToAuth());
   ReactDOM.render(React.createElement(Main),
     document.getElementById('root'));

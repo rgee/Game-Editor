@@ -1,10 +1,14 @@
-import React from 'react'
-import Store from '../store';
-import { Route } from 'react-router';
+import React from 'react';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends React.Component {
   render() {
-    return <div>{this.props.children}</div>;
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        {this.props.children}
+      </MuiThemeProvider>
+    );
   }
 }
 
