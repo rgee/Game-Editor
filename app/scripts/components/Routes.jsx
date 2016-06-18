@@ -3,13 +3,25 @@ import { hashHistory, Router, IndexRoute, Route } from 'react-router';
 import Login from './Login';
 import Home from './Home';
 import App from './App';
-
+import firebase from '../firebase';
 
 class Routes extends React.Component {
-  requireAuth(nextState, replace) {
+  requireAuth(nextState, replace, callback) {
     const { isAwaitingAuthDecision, isLoggedIn } = this.props;
-    if (!isAwaitingAuthDecision && !isLoggedIn) {
+    if (isAwaitingAuthDecision) {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          replace('/login');
+        } else {
+          replace('/');
+        }
+        callback();
+      })
+    } else if (!isLoggedIn) {
       replace('/login');
+      callback();
+    } else {
+      callback();
     }
   }
 
