@@ -18,6 +18,17 @@ export default {
     };
   },
 
+  logout() {
+    return (dispatch, getState) => {
+      dispatch({ type: Actions.AttemptingLogout });
+      firebase.auth().signOut().then(
+        () => {
+          dispatch({ type: Actions.Logout });
+        }
+      );
+    };
+  },
+
   attemptLogin(email, password) {
     return (dispatch, getState) => {
       dispatch({ type: Actions.AttemptingLogin });

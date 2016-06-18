@@ -18,6 +18,16 @@ export default (currentState, action) => {
         state: 'fetching_user',
         user: null
       };
+    case Actions.AttemptingLogout:
+      return {
+        state: 'logging_out',
+        user: currentState.user
+      };
+    case Actions.AttemptingLogin:
+      return {
+        state: 'logging_in',
+        user: null
+      };
     default:
       return currentState || initialState.auth;
   }
