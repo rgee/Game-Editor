@@ -1,12 +1,10 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import Store from '../store';
-import { Provider } from 'react-redux';
 
 class App extends React.Component {
   render() {
-    return (<Provider store={Store}>
-        <div>Hello, World!</div>
-      </Provider>
+    return (
+      <div>Hello, World!</div>
     );
   }
 }

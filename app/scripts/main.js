@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AuthActions from './actions/authActions';
 import App from './components/App';
 
 /*!
