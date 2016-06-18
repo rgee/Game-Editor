@@ -4,7 +4,7 @@ import { Route } from 'react-router';
 
 class App extends React.Component {
   render() {
-    return <div></div>;
+    return <div>{this.props.children}</div>;
   }
 }
 
