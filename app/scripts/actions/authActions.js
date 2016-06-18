@@ -16,5 +16,24 @@ export default {
           }
         });
     };
+  },
+
+  attemptLogin(email, password) {
+    return (dispatch, getState) => {
+      dispatch({ type: Actions.AttemptingLogin });
+      firebase.auth().signInWithEmailAndPassword(email, password).then(
+        (user) => {
+          dispatch({
+            type: Actions.Login,
+            user: user
+          });
+        },
+        (error) => {
+          const { code, message } = error;
+          console.error('Failed login.', code, message);
+          dispatch({ type: Actions.Logout });
+        }
+      )
+    };
   }
 };
