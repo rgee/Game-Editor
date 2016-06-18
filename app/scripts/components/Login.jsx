@@ -1,27 +1,17 @@
 import React, { PropTypes } from 'react'
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import LoginForm from './LoginForm';
+import { connect } from 'react-redux';
 
-class Login extends React.Component {
-  render () {
-    const actions = [];
-    return (
-      <div>
-        <Dialog
-          title="Log In"
-          actions={actions}
-          modal={true}
-          open={true}
-        >
-          <TextField id="email" hintText="Email" />
-          <br />
-          <TextField id="password" type="password" hintText="Password" />
-        </Dialog>
-      </div>
-    );
-  }
-}
+const mapStateToProps = state => ({});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit(form) {
+      console.log("submitting ", form);
+    }
+  };
+};
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
