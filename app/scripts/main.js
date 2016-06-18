@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import App from './components/App';
 
 /*!
  *
@@ -82,17 +82,6 @@ import ReactDOM from 'react-dom';
       console.error('Error during service worker registration:', e);
     });
   }
-  const HelloMessage = React.createClass({
-    displayName: 'HelloMessage',
-    render() {
-      return React.createElement(
-        'div',
-        null,
-        'Hello ',
-        this.props.name
-      );
-    }
-  });
-  ReactDOM.render(React.createElement(HelloMessage, { name: 'World' }),
+  ReactDOM.render(React.createElement(App),
     document.getElementById('root'));
 })();

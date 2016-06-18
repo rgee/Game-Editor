@@ -117,11 +117,15 @@ gulp.task('scripts', () =>
     plugins: [
       babel({
         exclude: 'node_modules/**',
+        plugins: ['transform-react-jsx'],
         presets: ['es2015-rollup']
       }),
-      resolveNodeModules({ jsnext: true }),
+      resolveNodeModules({
+        jsnext: true,
+        extensions: ['.js', '.jsx']
+      }),
       convertCommonJS(),
-      
+
       // https://github.com/rollup/rollup/issues/487
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')
