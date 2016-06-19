@@ -114,7 +114,13 @@ gulp.task('scripts:prod', () =>
     ])
       .pipe(webpack({
         resolve: {
-          extensions: ['', '.js', '.jsx']
+          extensions: ['', '.js', '.jsx'],
+          alias: {
+            firebaseConfig: './config/firebase.production.js',
+          }
+        },
+        output: {
+          filename: 'main.min.js'
         },
         module: {
           loaders: [
@@ -144,7 +150,10 @@ gulp.task('scripts', () =>
       .pipe(webpack({
         devtool: 'source-map',
         resolve: {
-          extensions: ['', '.js', '.jsx']
+          extensions: ['', '.js', '.jsx'],
+          alias: {
+            firebaseConfig: './config/firebase.staging.js',
+          }
         },
         output: {
           filename: 'main.js'
@@ -241,7 +250,17 @@ gulp.task('serve:dist', ['default'], () =>
 );
 
 // Build production files, the default task
-gulp.task('default', ['clean'], cb =>
+gulp.task('build:prod', ['clean'], cb =>
+  runSequence(
+    'styles',
+    ['lint', 'html', 'scripts:prod', 'images', 'copy'],
+    'generate-service-worker',
+    cb
+  )
+);
+
+// Build production files, the default task
+gulp.task('build:stage', ['clean'], cb =>
   runSequence(
     'styles',
     ['lint', 'html', 'scripts', 'images', 'copy'],

@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "tpqedit"
+    "default": "tpqedit",
+    "staging": "tpqedit-staging",
+    "prod": "tpqedit"
   }
 }
