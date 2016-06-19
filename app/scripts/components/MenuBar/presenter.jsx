@@ -11,7 +11,8 @@ class MainMenu extends React.Component {
       avatarUrl,
       userDisplayName,
       onMenuClick,
-      onLogoutClick
+      onLogoutClick,
+      onDrawerChangeRequest
     } = this.props;
 
     return (
@@ -21,10 +22,8 @@ class MainMenu extends React.Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={onMenuClick}
         />
-        <Drawer open={isMenuOpen}>
-          <MenuItem>
-            <Avatar src={avatarUrl} />
-          </MenuItem>
+        <Drawer open={isMenuOpen} docked={false} onRequestChange={onDrawerChangeRequest}>
+          {avatarUrl ? <Avatar src={avatarUrl} /> : null}
           <MenuItem onTouchTap={onLogoutClick}>Logout</MenuItem>
         </Drawer>
       </div>
@@ -33,11 +32,12 @@ class MainMenu extends React.Component {
 }
 
 MainMenu.propTypes = {
-  userDisplayName: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
+  userDisplayName: PropTypes.string,
+  avatarUrl: PropTypes.string,
   isMenuOpen: PropTypes.bool.isRequired,
   onMenuClick: PropTypes.func.isRequired,
-  onLogoutClick: PropTypes.func.isRequired
+  onLogoutClick: PropTypes.func.isRequired,
+  onDrawerChangeRequest: PropTypes.func.isRequired
 };
 
 export default MainMenu;

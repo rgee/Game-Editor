@@ -20,6 +20,14 @@ const mapDispatchToProps = (dispatch) => {
 
     onMenuClick() {
       dispatch(MainMenuActions.toggle());
+    },
+
+    onDrawerChangeRequest(open) {
+      if (open) {
+        dispatch(MainMenuActions.open());
+      } else {
+        dispatch(MainMenuActions.close());
+      }
     }
   };
 };
