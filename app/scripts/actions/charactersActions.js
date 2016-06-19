@@ -18,6 +18,18 @@ export default {
   startNewCharacterCreation() {
     return (dispatch) => {
       dispatch({ type: Actions.StartCreatingNewCharacter });
-    }
+    };
+  },
+
+  confirmNewCharacter() {
+    return (dispatch) =>{
+      dispatch({ type: Actions.ConfirmNewCharacter });
+    };
+  },
+
+  discardNewCharacter() {
+    return (dispatch) =>{
+      dispatch({ type: Actions.DiscardNewCharacter });
+    };
   }
 }

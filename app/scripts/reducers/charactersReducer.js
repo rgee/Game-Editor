@@ -18,6 +18,18 @@ export default (currentState, action) => {
         state: 'creating_new_character',
         values: currentState.values
       };
+    case Actions.ConfirmNewCharacter:
+      // TODO: this should be a loading state while the character
+      // is saving.
+      return {
+        state: 'loaded',
+        values: currentState.values
+      };
+    case Actions.DiscardNewCharacter:
+      return {
+        state: 'loaded',
+        values: currentState.values
+      };
     default:
       return currentState || initialState.characters;
   }

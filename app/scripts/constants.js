@@ -8,5 +8,7 @@ export const Actions = {
   OpenMainMenu: 'openMainMenu',
   FetchingCharacters: 'fetchingCharacters',
   ReceiveCharacters: 'receiveCharacters',
-  StartCreatingNewCharacter: 'startCreatingNewCharacter'
+  StartCreatingNewCharacter: 'startCreatingNewCharacter',
+  DiscardNewCharacter: 'discardNewCharacter',
+  ConfirmNewCharacter: 'confirmNewCharacter'
 };

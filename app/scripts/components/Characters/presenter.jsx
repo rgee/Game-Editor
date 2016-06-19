@@ -3,9 +3,40 @@ import { List, ListItem } from 'material-ui/list';
 import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 class Characters extends React.Component {
-  render () {
+  renderNewCharacterForm() {
+    const {
+      isCreatingNewCharacter,
+      onNewCharacterConfirmed,
+      onNewCharacterDiscarded
+    } = this.props;
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        onTouchTap={onNewCharacterDiscarded}
+      />,
+      <FlatButton
+        label="Submit"
+        onTouchTap={onNewCharacterConfirmed}
+      />
+    ];
+
+    return (
+      <Dialog
+        title="New Character"
+        modal={true}
+        actions={actions}
+        open={isCreatingNewCharacter}
+      >
+      </Dialog>
+    );
+  }
+
+  render() {
     const {
       isCreatingNewCharacter,
       onCharacterAddClicked,
@@ -35,6 +66,7 @@ class Characters extends React.Component {
           </FloatingActionButton> :
           null
         }
+        {this.renderNewCharacterForm()}
       </div>
     )
   }

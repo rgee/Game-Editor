@@ -16,6 +16,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCharacterAddClicked() {
       dispatch(CharactersActions.startNewCharacterCreation());
+    },
+
+    onNewCharacterConfirmed() {
+      dispatch(CharactersActions.confirmNewCharacter());
+    },
+
+    onNewCharacterDiscarded() {
+      dispatch(CharactersActions.discardNewCharacter());
     }
   };
 };
