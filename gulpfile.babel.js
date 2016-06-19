@@ -143,6 +143,37 @@ gulp.task('scripts:prod', () =>
       .pipe(gulp.dest('dist/scripts'))
 );
 
+gulp.task('scripts:stage', () =>
+    gulp.src([
+      './app/scripts/main.js'
+    ])
+      .pipe(webpack({
+        devtool: 'source-map',
+        resolve: {
+          extensions: ['', '.js', '.jsx'],
+          alias: {
+            firebaseConfig: './config/firebase.staging.js',
+          }
+        },
+        output: {
+          filename: 'main.min.js'
+        },
+        module: {
+          loaders: [
+            {
+              test: /.jsx?$/,
+              loader: 'babel-loader',
+              exclude: /node_modules/,
+              query: {
+                presets: ['es2015']
+              }
+            }
+          ]
+        }
+        }))
+      .pipe(gulp.dest('dist/scripts'))
+);
+
 gulp.task('scripts', () =>
     gulp.src([
       './app/scripts/main.js'
@@ -263,7 +294,7 @@ gulp.task('build:prod', ['clean'], cb =>
 gulp.task('build:stage', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'html', 'scripts', 'images', 'copy'],
+    ['lint', 'html', 'scripts:stage', 'images', 'copy'],
     'generate-service-worker',
     cb
   )
