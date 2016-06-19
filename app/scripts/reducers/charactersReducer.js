@@ -13,6 +13,11 @@ export default (currentState, action) => {
         state: 'loaded',
         values: action.values
       };
+    case Actions.StartCreatingNewCharacter:
+      return {
+        state: 'creating_new_character',
+        values: currentState.values
+      };
     default:
       return currentState || initialState.characters;
   }

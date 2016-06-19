@@ -7,5 +7,6 @@ export const Actions = {
   CloseMainMenu: 'closeMainMenu',
   OpenMainMenu: 'openMainMenu',
   FetchingCharacters: 'fetchingCharacters',
-  ReceiveCharacters: 'receiveCharacters'
+  ReceiveCharacters: 'receiveCharacters',
+  StartCreatingNewCharacter: 'startCreatingNewCharacter'
 };

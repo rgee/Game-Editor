@@ -13,5 +13,11 @@ export default {
         });
       });
     };
+  },
+
+  startNewCharacterCreation() {
+    return (dispatch) => {
+      dispatch({ type: Actions.StartCreatingNewCharacter });
+    }
   }
 }
