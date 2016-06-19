@@ -2,6 +2,7 @@ import React from 'react';
 import { green900, green700, yellow200 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MenuBar from './MenuBar';
 
 const theme = getMuiTheme({
   palette: {
@@ -15,7 +16,10 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={theme}>
-        {this.props.children}
+        <div>
+          <MenuBar />
+          {this.props.children}
+        </div>
       </MuiThemeProvider>
     );
   }

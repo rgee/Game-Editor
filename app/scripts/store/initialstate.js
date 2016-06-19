@@ -3,5 +3,9 @@ export default {
   auth: {
     state: 'anonymous',
     user: null
+  },
+  characters: {
+    state: 'uninitialized',
+    values: null
   }
 };

@@ -3,6 +3,7 @@ import { hashHistory, Router, IndexRoute, Route } from 'react-router';
 import Login from './Login';
 import Home from './Home';
 import App from './App';
+import Characters from './Characters';
 import firebase from '../firebase';
 
 class Routes extends React.Component {
@@ -13,7 +14,7 @@ class Routes extends React.Component {
         if (!user) {
           replace('/login');
         } else {
-          replace('/');
+          replace('/characters');
         }
         callback();
       })
@@ -25,13 +26,16 @@ class Routes extends React.Component {
     }
   }
 
-  render () {
+  render() {
+    const { onCharactersOpen } = this.props;
     return (
       <Router history={hashHistory}>
         <Route path="/" component={App} >
           <Route path="/login" component={Login} />
           <Route path="/test" component={Login} />
-          <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)}/>
+          <Route path="/characters" component={Characters} onEnter={onCharactersOpen}>
+          </Route>
+          <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>
     );
@@ -40,7 +44,8 @@ class Routes extends React.Component {
 
 Routes.propTypes = {
   isAwaitingAuthDecision: React.PropTypes.bool,
-  isLoggedIn: React.PropTypes.bool
+  isLoggedIn: React.PropTypes.bool,
+  onCharactersOpen: PropTypes.func.isRequired
 };
 
 export default Routes;

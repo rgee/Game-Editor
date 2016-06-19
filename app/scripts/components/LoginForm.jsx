@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 
 class LoginForm extends React.Component {
   render () {
-    const { isLoggingIn, fields: { email, password}, handleSubmit } = this.props;
+    const { isLoggingIn, fields: { email, password }, handleSubmit } = this.props;
     const actions = [
       <FlatButton
         label="Submit"

@@ -3,7 +3,12 @@ import MenuBar from './MenuBar';
 
 class Home extends React.Component {
   render() {
-    return <MenuBar />;
+    return (
+      <div>
+        <MenuBar />
+        {this.props.children}
+      </div>
+    );
   }
 }
 

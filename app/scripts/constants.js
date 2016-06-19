@@ -5,5 +5,7 @@ export const Actions = {
   AttemptingLogout: 'attemptingLogout',
   FetchingUser: 'fetchingUser',
   CloseMainMenu: 'closeMainMenu',
-  OpenMainMenu: 'openMainMenu'
+  OpenMainMenu: 'openMainMenu',
+  FetchingCharacters: 'fetchingCharacters',
+  ReceiveCharacters: 'receiveCharacters'
 };

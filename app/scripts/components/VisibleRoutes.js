@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Routes from './Routes';
+import CharactersActions from '../actions/charactersActions';
 
 const mapStateToProps = (state) => {
   return {
@@ -8,4 +9,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Routes);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCharactersOpen() {
+      dispatch(CharactersActions.load());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);
