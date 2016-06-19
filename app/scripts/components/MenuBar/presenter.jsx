@@ -1,15 +1,15 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
 
 class MainMenu extends React.Component {
-  render () {
+  render() {
     const {
       isMenuOpen,
       avatarUrl,
-      userDisplayName,
       onMenuClick,
       onLogoutClick,
       onDrawerChangeRequest
@@ -22,8 +22,17 @@ class MainMenu extends React.Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={onMenuClick}
         />
-        <Drawer open={isMenuOpen} docked={false} onRequestChange={onDrawerChangeRequest}>
+        <Drawer
+          open={isMenuOpen}
+          docked={false}
+          onRequestChange={onDrawerChangeRequest}>
+
           {avatarUrl ? <Avatar src={avatarUrl} /> : null}
+          <MenuItem>Characters</MenuItem>
+          <MenuItem>Storyboard</MenuItem>
+          <MenuItem>Maps</MenuItem>
+          <MenuItem>Dialogue</MenuItem>
+          <Divider />
           <MenuItem onTouchTap={onLogoutClick}>Logout</MenuItem>
         </Drawer>
       </div>
