@@ -2,15 +2,15 @@ import { Actions } from '../constants';
 
 export default {
   close() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
       dispatch({ type: Actions.CloseMainMenu });
-    }
+    };
   },
 
   open() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
       dispatch({ type: Actions.OpenMainMenu });
-    }
+    };
   },
 
   toggle() {

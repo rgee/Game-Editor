@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import AuthActions from './actions/authActions';
 import Main from './components/Main';
 import Store from './store';
-import authActions from './actions/authActions';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 /*!
@@ -91,7 +90,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
   // Check this repo:
   // https://github.com/zilverline/react-tap-event-plugin
   injectTapEventPlugin();
-  Store.dispatch(authActions.listenToAuth());
+  Store.dispatch(AuthActions.listenToAuth());
   ReactDOM.render(React.createElement(Main),
     document.getElementById('root'));
 })();
