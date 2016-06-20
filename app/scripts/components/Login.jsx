@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 import { connect } from 'react-redux';
 import AuthActions from '../actions/authActions';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { auth } = state;
     return {
       isLoggingIn: auth.state === 'logging_in'

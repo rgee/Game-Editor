@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import CharactersView from './presenter';
 import CharactersActions from '../../actions/charactersActions';
+import { reset } from 'redux-form';
 import { values as getValues } from 'lodash';
 
 const mapStateToProps = (currentState) => {
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     onNewCharacterDiscarded() {
+      dispatch(reset('newCharacter'));
       dispatch(CharactersActions.discardNewCharacter());
     }
   };

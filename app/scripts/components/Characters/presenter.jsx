@@ -3,8 +3,8 @@ import { List, ListItem } from 'material-ui/list';
 import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import NewCharacterForm from './NewCharacterForm';
+import { reduxForm } from 'redux-form';
 
 class Characters extends React.Component {
   renderNewCharacterForm() {
@@ -14,25 +14,15 @@ class Characters extends React.Component {
       onNewCharacterDiscarded
     } = this.props;
 
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        onTouchTap={onNewCharacterDiscarded}
-      />,
-      <FlatButton
-        label="Submit"
-        onTouchTap={onNewCharacterConfirmed}
-      />
-    ];
+    if (!isCreatingNewCharacter) {
+      return null;
+    }
 
     return (
-      <Dialog
-        title="New Character"
-        modal={true}
-        actions={actions}
-        open={isCreatingNewCharacter}
-      >
-      </Dialog>
+      <NewCharacterForm
+        onSubmit={onNewCharacterConfirmed}
+        onNewCharacterDiscarded={onNewCharacterDiscarded}
+      />
     );
   }
 

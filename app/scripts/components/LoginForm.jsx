@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 
