@@ -10,5 +10,6 @@ export const Actions = {
   ReceiveCharacters: 'receiveCharacters',
   StartCreatingNewCharacter: 'startCreatingNewCharacter',
   DiscardNewCharacter: 'discardNewCharacter',
-  ConfirmNewCharacter: 'confirmNewCharacter'
+  SavingNewCharacter: 'savingNewCharacter',
+  NewCharacterSaved: 'newCharacterSaved'
 };

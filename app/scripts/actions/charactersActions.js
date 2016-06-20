@@ -21,9 +21,21 @@ export default {
     };
   },
 
-  confirmNewCharacter() {
+  confirmNewCharacter(character) {
     return (dispatch) =>{
-      dispatch({ type: Actions.ConfirmNewCharacter });
+      dispatch({ type: Actions.SavingNewCharacter });
+      var characterKey = character.name.toLowerCase();
+      firebase.database().ref(`characters/${characterKey}`).set(character).then(
+        () => {
+          dispatch({
+            type: Actions.NewCharacterSaved,
+            character
+          });
+        },
+        (err) => {
+          console.error('Failed to save character: ' + err);
+        }
+      )
     };
   },
 

@@ -30,6 +30,16 @@ export default (currentState, action) => {
         state: 'loaded',
         values: currentState.values
       };
+    case Actions.SavingNewCharacter:
+      return {
+        state: 'saving',
+        values: currentState.values
+      };
+    case Actions.NewCharacterSaved:
+      return {
+        state: 'loaded',
+        values: currentState.values.concat([action.character])
+      };
     default:
       return currentState || initialState.characters;
   }
