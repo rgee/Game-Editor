@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NewCharacterForm from './NewCharacterForm';
 import { reduxForm } from 'redux-form';
-import { Link } from 'react-router';
+import { withRouter } from 'react-router';
 
 class Characters extends React.Component {
   componentDidMount() {
@@ -31,6 +31,13 @@ class Characters extends React.Component {
     );
   }
 
+  goToCharacter(name) {
+    const { router } = this.props;
+    router.push({
+      pathname: `/characters/${name}`
+    });
+  }
+
   render() {
     const {
       isCreatingNewCharacter,
@@ -54,7 +61,8 @@ class Characters extends React.Component {
             return (
               <ListItem
                 key={character.name}
-                primaryText={<Link to={`/characters/${character.name}`}>{character.name}</Link>}
+                primaryText={character.name}
+                onTouchTap={this.goToCharacter.bind(this, character.name)}
               />
             );
           })}
@@ -80,4 +88,4 @@ Characters.PropTypes = {
   fetchCharacters: PropTypes.func
 };
 
-export default Characters;
+export default withRouter(Characters);
