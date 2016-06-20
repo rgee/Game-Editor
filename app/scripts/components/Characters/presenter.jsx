@@ -5,6 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NewCharacterForm from './NewCharacterForm';
 import { reduxForm } from 'redux-form';
+import { Link } from 'react-router';
 
 class Characters extends React.Component {
   renderNewCharacterForm() {
@@ -46,7 +47,12 @@ class Characters extends React.Component {
       <div>
         <List>
           {characters.map((character) => {
-            return <ListItem key={character.name} primaryText={character.name} />;
+            return (
+              <ListItem
+                key={character.name}
+                primaryText={<Link to={`/characters/${character.name}`}>{character.name}</Link>}
+              />
+            );
           })}
         </List>
         {

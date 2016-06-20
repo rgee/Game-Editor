@@ -4,6 +4,7 @@ import Login from './Login';
 import Home from './Home';
 import App from './App';
 import Characters from './Characters';
+import Character from './Character';
 import firebase from '../firebase';
 
 class Routes extends React.Component {
@@ -33,8 +34,8 @@ class Routes extends React.Component {
         <Route path="/" component={App} >
           <Route path="/login" component={Login} />
           <Route path="/test" component={Login} />
-          <Route path="/characters" component={Characters} onEnter={onCharactersOpen}>
-          </Route>
+          <Route path="/characters" component={Characters} onEnter={onCharactersOpen} />
+          <Route path="/characters/:characterName" component={Character} />
           <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>
