@@ -20,7 +20,10 @@ class Character extends React.Component {
     return (
       <div>
         <h2>{character.name}</h2>
-        <FloatingActionButton onMouseDown={this.handleRemoveClicked.bind(this)}>
+        <FloatingActionButton
+          onMouseDown={this.handleRemoveClicked.bind(this)}
+          backgroundColor="#CE0000"
+        >
           <ContentRemove />
         </FloatingActionButton> :
       </div>
