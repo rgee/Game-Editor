@@ -1,5 +1,6 @@
 import { Actions } from '../constants';
 import initialState from '../store/initialstate';
+import remove from 'lodash';
 
 export default (currentState, action) => {
   switch (action.type) {
@@ -39,6 +40,11 @@ export default (currentState, action) => {
       return {
         state: 'loaded',
         values: currentState.values.concat([action.character])
+      };
+    case Actions.DeletingCharacter:
+      return {
+        state: 'deleting',
+        values: remove(currentState.values, action.character)
       };
     default:
       return currentState || initialState.characters;

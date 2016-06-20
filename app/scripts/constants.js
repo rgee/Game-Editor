@@ -11,5 +11,7 @@ export const Actions = {
   StartCreatingNewCharacter: 'startCreatingNewCharacter',
   DiscardNewCharacter: 'discardNewCharacter',
   SavingNewCharacter: 'savingNewCharacter',
-  NewCharacterSaved: 'newCharacterSaved'
+  NewCharacterSaved: 'newCharacterSaved',
+  DeletingCharacter: 'deletingCharacter',
+  CharacterDeleted: 'characterDeleted'
 };

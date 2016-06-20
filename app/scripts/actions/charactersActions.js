@@ -21,8 +21,27 @@ export default {
     };
   },
 
+  deleteCharacter(character) {
+    return (dispatch) => {
+      dispatch({ type: Actions.DeletingCharacter });
+      var characterKey = character.name.toLowerCase();
+      firebase.database().ref(`characters/${characterKey}`).remove().then(
+        () => {
+          dispatch({
+            type: Actions.CharacterDeleted,
+            character
+          });
+        },
+
+        (err) => {
+          console.error('Failed to delete character: ' + err);
+        }
+      );
+    };
+  },
+
   confirmNewCharacter(character) {
-    return (dispatch) =>{
+    return (dispatch) => {
       dispatch({ type: Actions.SavingNewCharacter });
       var characterKey = character.name.toLowerCase();
       firebase.database().ref(`characters/${characterKey}`).set(character).then(
