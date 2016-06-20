@@ -13,7 +13,7 @@ const mapStateToProps = (currentState, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
 
-  };
+  };  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterView);

@@ -26,6 +26,10 @@ const mapDispatchToProps = (dispatch) => {
     onNewCharacterDiscarded() {
       dispatch(reset('newCharacter'));
       dispatch(CharactersActions.discardNewCharacter());
+    },
+
+    fetchCharacters() {
+      dispatch(CharactersActions.load());
     }
   };
 };

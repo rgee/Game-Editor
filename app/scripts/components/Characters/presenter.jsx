@@ -8,6 +8,10 @@ import { reduxForm } from 'redux-form';
 import { Link } from 'react-router';
 
 class Characters extends React.Component {
+  componentDidMount() {
+    this.props.fetchCharacters();
+  }
+
   renderNewCharacterForm() {
     const {
       isCreatingNewCharacter,
@@ -72,7 +76,8 @@ Characters.PropTypes = {
   characters: PropTypes.array,
   isLoading: PropTypes.bool,
   isCreatingNewCharacter: PropTypes.bool,
-  onCharacterAddClicked: PropTypes.func
+  onCharacterAddClicked: PropTypes.func,
+  fetchCharacters: PropTypes.func
 };
 
 export default Characters;

@@ -28,13 +28,11 @@ class Routes extends React.Component {
   }
 
   render() {
-    const { onCharactersOpen } = this.props;
     return (
       <Router history={hashHistory}>
         <Route path="/" component={App} >
           <Route path="/login" component={Login} />
-          <Route path="/test" component={Login} />
-          <Route path="/characters" component={Characters} onEnter={onCharactersOpen} />
+          <Route path="/characters" component={Characters} />
           <Route path="/characters/:characterName" component={Character} />
           <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
@@ -45,8 +43,7 @@ class Routes extends React.Component {
 
 Routes.propTypes = {
   isAwaitingAuthDecision: React.PropTypes.bool,
-  isLoggedIn: React.PropTypes.bool,
-  onCharactersOpen: PropTypes.func.isRequired
+  isLoggedIn: React.PropTypes.bool
 };
 
 export default Routes;
