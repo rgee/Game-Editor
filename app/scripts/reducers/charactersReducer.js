@@ -39,7 +39,9 @@ export default (currentState, action) => {
     case Actions.NewCharacterSaved:
       return {
         state: 'loaded',
-        values: currentState.values.concat([action.character])
+        values: Object.assign({}, currentState.values, {
+          [action.character.name.toLowerCase()]: action.character
+        })
       };
     case Actions.DeletingCharacter:
       return {
