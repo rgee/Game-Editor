@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(CharactersActions.startNewCharacterCreation());
     },
 
-    onNewCharacterConfirmed() {
-      dispatch(CharactersActions.confirmNewCharacter());
+    onNewCharacterConfirmed(character) {
+      dispatch(CharactersActions.confirmNewCharacter(character));
     },
 
     onNewCharacterDiscarded() {
