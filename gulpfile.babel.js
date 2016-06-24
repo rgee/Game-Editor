@@ -38,7 +38,6 @@ import rollup from 'gulp-rollup';
 import replace from 'rollup-plugin-replace';
 import resolveNodeModules from 'rollup-plugin-node-resolve';
 import convertCommonJS from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
 const $ = gulpLoadPlugins();
