@@ -25,6 +25,8 @@ export default {
   deleteCharacter(character) {
     return (dispatch) => {
       dispatch({ type: Actions.DeletingCharacter });
+
+      // TODO: Delete portrait from storage here.
       var characterKey = character.name.toLowerCase();
       firebase.database().ref(`characters/${characterKey}`).remove().then(
         () => {
@@ -53,7 +55,10 @@ export default {
       };
       const file = character.portrait.file;
 
-      const uploadTask = firebase.storage().ref().child('portraits/' + character.id).put(file, portraitMeta);
+      const portraitPath = `portraits/${character.id}`;
+      conaracter.portraitPath = portraitPath;
+
+      const uploadTask = firebase.storage().ref().child(portraitPath).put(file, portraitMeta);
       uploadTask.on('state_changed',
         (snapshot) => {
 
