@@ -56,7 +56,7 @@ export default {
       const file = character.portrait.file;
 
       const portraitPath = `portraits/${character.id}`;
-      conaracter.portraitPath = portraitPath;
+      character.portraitPath = portraitPath;
 
       const uploadTask = firebase.storage().ref().child(portraitPath).put(file, portraitMeta);
       uploadTask.on('state_changed',
