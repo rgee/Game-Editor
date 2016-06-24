@@ -1,6 +1,7 @@
 import { Actions } from '../constants';
 import firebase from '../firebase';
 import uuid from 'uuid';
+import { pick } from 'lodash';
 
 
 export default {
@@ -71,7 +72,13 @@ export default {
 
           const characterKey = character.name.toLowerCase();
           character.portraitURL = uploadTask.snapshot.downloadURL;
-          firebase.database().ref(`characters/${characterKey}`).set(character).then(
+          const sanitizedCharacter = pick(character, [
+            'id',
+            'name',
+            'portraitPath',
+            'portraitURL'
+          ]);
+          firebase.database().ref(`characters/${characterKey}`).set(sanitizedCharacter).then(
             () => {
               dispatch({
                 type: Actions.NewCharacterSaved,
