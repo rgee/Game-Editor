@@ -1,6 +1,6 @@
 import { Actions } from '../constants';
 import firebase from '../firebase';
-import { uniqueId } from 'lodash';
+import uuid from 'uuid';
 
 
 export default {
@@ -45,7 +45,7 @@ export default {
     return (dispatch) => {
       dispatch({ type: Actions.SavingNewCharacter });
       character = Object.assign({}, character, {
-        id: uniqueId()
+        id: uuid.v4()
       });
 
       const portraitMeta = {

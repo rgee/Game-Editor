@@ -1,11 +1,22 @@
 import React, { PropTypes } from 'react'
-import { List, ListItem } from 'material-ui/list';
+import { GridList, GridTile } from 'material-ui/GridList';
 import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NewCharacterForm from './NewCharacterForm';
 import { reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
+
+const styles = {
+  gridRoot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
+  gridList: {
+    width: 500
+  }
+};
 
 class Characters extends React.Component {
   componentDidMount() {
@@ -38,11 +49,36 @@ class Characters extends React.Component {
     });
   }
 
+  renderContent() {
+    const { characters } = this.props;
+    if (!characters.length) {
+      return <h2>No Characters</h2>;
+    }
+
+    return (
+      <div style={styles.gridRoot}>
+        <GridList cellHeight={200} style={styles.gridList}>
+          {characters.map((character) => {
+            return (
+              <GridTile
+                key={character.name}
+                title={character.name}
+                onTouchTap={this.goToCharacter.bind(this, character.name)}
+              >
+                <img src={character.portraitURL} />
+              </GridTile>
+
+            );
+          })}
+        </GridList>
+      </div>
+    );
+  }
+
   render() {
     const {
       isCreatingNewCharacter,
       onCharacterAddClicked,
-      characters,
       isLoading
     } = this.props;
 
@@ -50,23 +86,9 @@ class Characters extends React.Component {
       return <CircularProgress size={2} />;
     }
 
-    if (!characters.length) {
-      return <h2>No Characters</h2>;
-    }
-
     return (
       <div>
-        <List>
-          {characters.map((character) => {
-            return (
-              <ListItem
-                key={character.name}
-                primaryText={character.name}
-                onTouchTap={this.goToCharacter.bind(this, character.name)}
-              />
-            );
-          })}
-        </List>
+        {this.renderContent()}
         {
           !isCreatingNewCharacter ?
           <FloatingActionButton onMouseDown={onCharacterAddClicked}>
