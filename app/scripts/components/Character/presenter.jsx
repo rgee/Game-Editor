@@ -20,6 +20,7 @@ class Character extends React.Component {
     return (
       <div>
         <h2>{character.name}</h2>
+        {character.portraitURL ? <img src={character.portraitURL} /> : null}
         <FloatingActionButton
           onMouseDown={this.handleRemoveClicked.bind(this)}
           backgroundColor="#CE0000"

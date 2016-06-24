@@ -1,5 +1,6 @@
 import { Actions } from '../constants';
 import firebase from '../firebase';
+import { uniqueId } from 'lodash';
 
 
 export default {
@@ -43,18 +44,41 @@ export default {
   confirmNewCharacter(character) {
     return (dispatch) => {
       dispatch({ type: Actions.SavingNewCharacter });
-      var characterKey = character.name.toLowerCase();
-      firebase.database().ref(`characters/${characterKey}`).set(character).then(
-        () => {
-          dispatch({
-            type: Actions.NewCharacterSaved,
-            character
-          });
+      character = Object.assign({}, character, {
+        id: uniqueId()
+      });
+
+      const portraitMeta = {
+        contentType: character.portrait.file.type
+      };
+      const file = character.portrait.file;
+
+      const uploadTask = firebase.storage().ref().child('portraits/' + character.id).put(file, portraitMeta);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+
         },
-        (err) => {
-          console.error('Failed to save character: ' + err);
+        (error) => {
+          console.error(error);
+        },
+
+        () => {
+
+          const characterKey = character.name.toLowerCase();
+          character.portraitURL = uploadTask.snapshot.downloadURL;
+          firebase.database().ref(`characters/${characterKey}`).set(character).then(
+            () => {
+              dispatch({
+                type: Actions.NewCharacterSaved,
+                character
+              });
+            },
+            (err) => {
+              console.error('Failed to save character: ' + err);
+            }
+          )
         }
-      )
+      );
     };
   },
 
