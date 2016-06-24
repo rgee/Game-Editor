@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import ImageFileUploader from '../ImageFileUploader';
 
 
 class NewCharacterForm extends React.Component {
@@ -10,7 +11,7 @@ class NewCharacterForm extends React.Component {
     const {
       open,
       onNewCharacterDiscarded,
-      fields: { name },
+      fields: { name, portrait },
       handleSubmit
     } = this.props;
 
@@ -25,6 +26,8 @@ class NewCharacterForm extends React.Component {
       />
     ];
 
+    const previewURL = portrait.value ? portrait.value.previewURL : null;
+
     return (
       <Dialog
         title="New Character"
@@ -32,6 +35,7 @@ class NewCharacterForm extends React.Component {
         actions={actions}
         open={true}
       >
+        <ImageFileUploader previewURL={previewURL} {...portrait} />
         <TextField id="name" hintText="Name" {...name} />
       </Dialog>
     );
@@ -40,7 +44,7 @@ class NewCharacterForm extends React.Component {
 
 NewCharacterForm = reduxForm({
   form: 'newCharacter',
-  fields: ['name']
+  fields: ['name', 'portrait']
 })(NewCharacterForm);
 
 export default NewCharacterForm;
