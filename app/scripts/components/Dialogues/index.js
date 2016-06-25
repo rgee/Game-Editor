@@ -7,6 +7,10 @@ const mapStateToProps = (currentState) => {
       {
         name: 'test-dialogue',
         id: '238923'
+      },
+      {
+        name: 'test-dialogue-2',
+        id: '238923'
       }
     ]
   };
