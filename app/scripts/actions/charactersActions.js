@@ -8,7 +8,7 @@ export default {
   load() {
     return (dispatch) => {
       dispatch({ type: Actions.FetchingCharacters });
-      firebase.database().ref('characters').on('value', (snapshot) => {
+      firebase.database().ref('characters').once('value').then((snapshot) => {
         dispatch({
           type: Actions.ReceiveCharacters,
           values: snapshot.val() || {}

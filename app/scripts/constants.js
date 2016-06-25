@@ -13,5 +13,7 @@ export const Actions = {
   SavingNewCharacter: 'savingNewCharacter',
   NewCharacterSaved: 'newCharacterSaved',
   DeletingCharacter: 'deletingCharacter',
-  CharacterDeleted: 'characterDeleted'
+  CharacterDeleted: 'characterDeleted',
+  FetchingDialogues: 'fetchingDialogues',
+  ReceiveDialogues: 'receiveDialogues'
 };

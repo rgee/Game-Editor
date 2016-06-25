@@ -7,5 +7,9 @@ export default {
   characters: {
     state: 'uninitialized',
     values: null
+  },
+  dialogues: {
+    state: 'uninitialized',
+    values: {}
   }
 };
