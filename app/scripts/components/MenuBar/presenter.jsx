@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
+import { withRouter } from 'react-router';
 
 class MainMenu extends React.Component {
   render() {
@@ -12,7 +13,10 @@ class MainMenu extends React.Component {
       avatarUrl,
       onMenuClick,
       onLogoutClick,
-      onDrawerChangeRequest
+      onDrawerChangeRequest,
+      onCharactersClick,
+      onDialoguesClick,
+      router
     } = this.props;
 
     return (
@@ -28,10 +32,10 @@ class MainMenu extends React.Component {
           onRequestChange={onDrawerChangeRequest}>
 
           {avatarUrl ? <Avatar src={avatarUrl} /> : null}
-          <MenuItem>Characters</MenuItem>
+          <MenuItem onTouchTap={() => onCharactersClick(router)}>Characters</MenuItem>
           <MenuItem>Storyboard</MenuItem>
           <MenuItem>Maps</MenuItem>
-          <MenuItem>Dialogue</MenuItem>
+          <MenuItem onTouchTap={() => onDialoguesClick(router)}>Dialogue</MenuItem>
           <Divider />
           <MenuItem onTouchTap={onLogoutClick}>Logout</MenuItem>
         </Drawer>
@@ -46,7 +50,9 @@ MainMenu.propTypes = {
   isMenuOpen: PropTypes.bool.isRequired,
   onMenuClick: PropTypes.func.isRequired,
   onLogoutClick: PropTypes.func.isRequired,
-  onDrawerChangeRequest: PropTypes.func.isRequired
+  onDrawerChangeRequest: PropTypes.func.isRequired,
+  onCharactersClick: PropTypes.func.isRequired,
+  onDialoguesClick: PropTypes.func.isRequired
 };
 
-export default MainMenu;
+export default withRouter(MainMenu);

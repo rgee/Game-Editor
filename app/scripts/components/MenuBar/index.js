@@ -28,6 +28,20 @@ const mapDispatchToProps = (dispatch) => {
       } else {
         dispatch(MainMenuActions.close());
       }
+    },
+
+    onCharactersClick(router) {
+      if (!router.isActive('/characters')) {
+        router.push('/characters')
+      }
+      dispatch(MainMenuActions.close());
+    },
+
+    onDialoguesClick(router) {
+      if (!router.isActive('/dialogues')) {
+        router.push('/dialogues')
+      }
+      dispatch(MainMenuActions.close());
     }
   };
 };

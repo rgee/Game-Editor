@@ -3,6 +3,7 @@ import { hashHistory, Router, IndexRoute, Route } from 'react-router';
 import Login from './Login';
 import Home from './Home';
 import App from './App';
+import Dialogues from './Dialogues';
 import Characters from './Characters';
 import Character from './Character';
 import firebase from '../firebase';
@@ -34,6 +35,7 @@ class Routes extends React.Component {
           <Route path="/login" component={Login} />
           <Route path="/characters" component={Characters} />
           <Route path="/characters/:characterName" component={Character} />
+          <Route path="/dialogues" component={Dialogues} />
           <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>
