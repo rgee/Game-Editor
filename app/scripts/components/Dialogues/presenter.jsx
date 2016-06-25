@@ -14,7 +14,7 @@ const styles = {
 
 class Dialogues extends React.Component {
   selectDialogue(id) {
-    this.context.router.push(`/dialogues/${id}`);
+    this.props.router.push(`/dialogues/${id}`);
   }
 
   renderDialougesArray() {
