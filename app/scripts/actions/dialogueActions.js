@@ -8,7 +8,7 @@ export default {
       firebase.database().ref('dialogues').once('value').then((dialogues) => {
         dispatch({
           type: Actions.ReceiveDialogues,
-          values: snapshot.val() || {}
+          values: dialogues.val() || {}
         });
       });
     };

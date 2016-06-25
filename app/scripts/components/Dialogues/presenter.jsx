@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
+import CircularProgress from 'material-ui/CircularProgress';
 import { List, ListItem } from 'material-ui/List';
 import { flatMap } from 'lodash';
 import { withRouter } from 'react-router';
@@ -13,12 +14,24 @@ const styles = {
 };
 
 class Dialogues extends React.Component {
+  componentDidMount() {
+    this.props.fetchDialogues();
+  }
+
   selectDialogue(id) {
     this.props.router.push(`/dialogues/${id}`);
   }
 
   renderDialougesArray() {
-    const { dialogues } = this.props;
+    const { dialogues, isLoading } = this.props;
+    if (isLoading) {
+      return <CircularProgress size={2} />;
+    }
+
+    if (!dialogues.length) {
+      return <h2>No Dialogues</h2>;
+    }
+
     return flatMap(dialogues, (dialogue, index, collection) => {
       const result = [
         <ListItem
@@ -49,7 +62,9 @@ class Dialogues extends React.Component {
 }
 
 Dialogues.PropTypes = {
-  dialogues: PropTypes.array
+  dialogues: PropTypes.array,
+  isLoading: PropTypes.bool,
+  fetchDialogues: PropTypes.func
 };
 
 export default withRouter(Dialogues);

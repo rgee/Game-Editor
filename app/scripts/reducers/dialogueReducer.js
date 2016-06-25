@@ -1,4 +1,5 @@
 import { Actions } from '../constants';
+import initialState from '../store/initialstate';
 
 export default (currentState, action) => {
   switch (action.type) {
@@ -10,7 +11,9 @@ export default (currentState, action) => {
     case Actions.ReceiveDialogues:
       return {
         state: 'loaded',
-        values: Object.assign({}, currentState.values, actions.dialogues)
+        values: Object.assign({}, currentState.values, action.dialogues)
       }
+    default:
+      return currentState || initialState.dialogues;
   }
 };
