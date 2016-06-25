@@ -5,12 +5,12 @@ const mapStateToProps = (currentState) => {
   return {
     dialogues: [
       {
-        name: 'test-dialogue',
-        id: '238923'
+        id: 'test-dialogue',
+        displayName: 'Test Dialogue'
       },
       {
-        name: 'test-dialogue-2',
-        id: '238923'
+        id: 'test-dialogue-2',
+        displayName: 'Test Dialogue 2'
       }
     ]
   };
