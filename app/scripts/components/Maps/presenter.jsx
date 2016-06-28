@@ -3,6 +3,7 @@ import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import { ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
+import AddButton from '../AddButton';
 
 const styles = {
   listPaper: {
@@ -44,6 +45,7 @@ class Maps extends React.Component {
       <div>
         <Paper style={styles.listPaper} zDepth={2}>
           {this.renderMapsList()}
+          <AddButton onMouseDown={this.props.onAddClicked} />
         </Paper>
       </div>
     )
@@ -53,6 +55,8 @@ class Maps extends React.Component {
 Maps.PropTypes = {
   maps: PropTypes.array,
   isLoading: PropTypes.bool,
+  isCreatingNew: PropTypes.bool,
+  onAddClicked: PropTypes.func,
   fetchMaps: PropTypes.func
 }
 

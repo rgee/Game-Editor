@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import { GridList, GridTile } from 'material-ui/GridList';
 import CircularProgress from 'material-ui/CircularProgress';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import AddButton from '../AddButton';
 import NewCharacterForm from './NewCharacterForm';
 import { reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
@@ -91,9 +90,7 @@ class Characters extends React.Component {
         {this.renderContent()}
         {
           !isCreatingNewCharacter ?
-          <FloatingActionButton onMouseDown={onCharacterAddClicked}>
-            <ContentAdd />
-          </FloatingActionButton> :
+          <AddButton onMouseDown={onCharacterAddClicked} /> :
           null
         }
         {this.renderNewCharacterForm()}

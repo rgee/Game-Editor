@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react'
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import AddButton from '../AddButton';
 import { ListItem } from 'material-ui/List';
 import { flatMap } from 'lodash';
 import { withRouter } from 'react-router';
@@ -13,14 +12,6 @@ const styles = {
   listPaper: {
     width: 400,
     margin: '40px auto'
-  },
-  actionButton: {
-    margin: 0,
-    top: 'auto',
-    right: 20,
-    bottom: 20,
-    left: 'auto',
-    position: 'fixed'
   }
 };
 
@@ -80,9 +71,6 @@ class Dialogues extends React.Component {
   renderAddButton() {
     const { onAddClicked } = this.props;
     return (
-      <FloatingActionButton style={styles.actionButton} onMouseDown={onAddClicked}>
-        <ContentAdd />
-      </FloatingActionButton>
     );
   }
 
