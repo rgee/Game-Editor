@@ -4,7 +4,7 @@ import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import { List, ListItem } from 'material-ui/List';
+import { ListItem } from 'material-ui/List';
 import { flatMap } from 'lodash';
 import { withRouter } from 'react-router';
 import NewDialogueForm from './NewDialogueForm';
@@ -69,12 +69,9 @@ class Dialogues extends React.Component {
           key={dialogue.id}
           onTouchTap={() => this.selectDialogue(dialogue.id)}
           primaryText={dialogue.displayName}
-        />
+        />,
+        <Divider key={index} />
       ];
-
-      if (index !== collection.length - 1) {
-        result.push(<Divider key={`divider-${index}`} />);
-      }
 
       return result;
     });
@@ -94,11 +91,9 @@ class Dialogues extends React.Component {
     return (
       <div>
         <Paper style={styles.listPaper} zDepth={2}>
-          <List>
             {this.renderDialougesArray()}
             {isCreatingNew ? null : this.renderAddButton()}
             {this.renderForm()}
-          </List>
         </Paper>
       </div>
     );
