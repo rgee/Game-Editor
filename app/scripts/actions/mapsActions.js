@@ -12,5 +12,21 @@ export default {
         });
       });
     };
+  },
+
+  create(map) {
+    throw new Error('no');
+  },
+
+  discardNewMap() {
+    return {
+      type: Actions.DiscardNewMap
+    };
+  },
+
+  startNewMapCreation() {
+    return {
+      type: Actions.StartCreatingNewMap
+    };
   }
 }

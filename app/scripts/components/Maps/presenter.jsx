@@ -4,6 +4,7 @@ import Divider from 'material-ui/Divider';
 import { ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
 import AddButton from '../AddButton';
+import NewMapForm from './NewMapForm';
 
 const styles = {
   listPaper: {
@@ -16,6 +17,27 @@ class Maps extends React.Component {
   componentDidMount() {
     this.props.fetchMaps();
   }
+
+  renderForm() {
+    const {
+      isCreatingNew,
+      onDiscardClicked,
+      onConfirmClicked,
+      isSaving
+    } = this.props;
+
+    if (!(isSaving || isCreatingNew)) {
+      return null;
+    }
+
+    return (
+      <NewMapForm
+        onSubmit={onConfirmClicked}
+        onDiscard={onDiscardClicked}
+      />
+    );
+  }
+
   renderMapsList() {
     const { maps, isLoading } = this.props;
     if (isLoading) {
@@ -41,11 +63,13 @@ class Maps extends React.Component {
   }
 
   render() {
+    const { isCreatingNew, onAddClicked } = this.props;
     return (
       <div>
         <Paper style={styles.listPaper} zDepth={2}>
           {this.renderMapsList()}
-          <AddButton onMouseDown={this.props.onAddClicked} />
+          {isCreatingNew ? null : <AddButton onMouseDown={onAddClicked} /> }
+          {this.renderForm()}
         </Paper>
       </div>
     )
@@ -55,8 +79,11 @@ class Maps extends React.Component {
 Maps.PropTypes = {
   maps: PropTypes.array,
   isLoading: PropTypes.bool,
+  isSaving: PropTypes.bool,
   isCreatingNew: PropTypes.bool,
   onAddClicked: PropTypes.func,
+  onConfirmClicked: PropTypes.func,
+  onDiscardClicked: PropTypes.func,
   fetchMaps: PropTypes.func
 }
 
