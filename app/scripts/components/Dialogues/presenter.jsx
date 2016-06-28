@@ -71,6 +71,7 @@ class Dialogues extends React.Component {
   renderAddButton() {
     const { onAddClicked } = this.props;
     return (
+      <AddButton onMouseDown={onAddClicked} />
     );
   }
 
