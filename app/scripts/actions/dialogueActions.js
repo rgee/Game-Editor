@@ -15,7 +15,11 @@ export default {
     return (dispatch) => {
       dispatch({ type: Actions.SavingNewDialogue });
       const id = uuid.v4();
-      dialogue = Object.assign({}, dialogue, { id });
+      const createdOn = new Date().getTime();
+      dialogue = Object.assign({}, dialogue, {
+        id,
+        createdOn
+      });
       firebase.database().ref(`dialogues/${id}`).set(dialogue).then(
         () => {
           dispatch({
@@ -33,7 +37,8 @@ export default {
   load() {
     return (dispatch) => {
       dispatch({ type: Actions.FetchingDialogues });
-      firebase.database().ref('dialogues').once('value').then((dialogues) => {
+      firebase.database().ref('dialogues')
+        .orderByChild('createdOn').once('value').then((dialogues) => {
         dispatch({
           type: Actions.ReceiveDialogues,
           dialogues: dialogues.val() || {}
