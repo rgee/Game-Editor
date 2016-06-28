@@ -3,6 +3,18 @@ import initialState from '../store/initialstate';
 
 export default (currentState, action) => {
   switch (action.type) {
+    case Actions.FetchingDialogue:
+      return {
+        state: 'loading',
+        values: currentState.values
+      };
+    case Actions.ReceiveDialogue:
+      return {
+        state: 'loaded',
+        values: Object.assign({}, currentState.values, {
+          [action.dialogue.id]: action.dialogue
+        })
+      };
     case Actions.FetchingDialogues:
       return {
         state: 'loading',

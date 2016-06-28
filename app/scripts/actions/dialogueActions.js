@@ -34,6 +34,18 @@ export default {
     };
   },
 
+  loadDialogue(id) {
+    return (dispatch) => {
+      dispatch({ type: Actions.FetchingDialogue });
+      firebase.database().ref(`dialogues/${id}`).once('value').then((snap) => {
+        dispatch({
+          type: Actions.ReceiveDialogue,
+          dialogue: snap.val()
+        });
+      });
+    }
+  },
+
   load() {
     return (dispatch) => {
       dispatch({ type: Actions.FetchingDialogues });

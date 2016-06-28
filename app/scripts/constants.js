@@ -19,5 +19,7 @@ export const Actions = {
   NewDialogueSaved: 'newDialogueSaved',
   SavingNewDialogue: 'savingNewDialogue',
   StartCreatingNewDialogue: 'startCreatingNewDialogue',
-  DiscardNewDialogue: 'discardNewDialogue'
+  DiscardNewDialogue: 'discardNewDialogue',
+  FetchingDialogue: 'fetchingDialogue',
+  ReceiveDialogue: 'receiveDialogue'
 };
