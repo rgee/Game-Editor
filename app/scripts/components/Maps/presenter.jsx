@@ -5,6 +5,7 @@ import { ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
 import AddButton from '../AddButton';
 import NewMapForm from './NewMapForm';
+import { flatMap } from 'lodash';
 
 const styles = {
   listPaper: {

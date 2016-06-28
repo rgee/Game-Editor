@@ -1,5 +1,6 @@
 import { Actions } from '../constants';
 import firebase from '../firebase';
+import uuid from 'uuid';
 
 export default {
   load() {
@@ -15,7 +16,28 @@ export default {
   },
 
   create(map) {
-    throw new Error('no');
+    return (dispatch) => {
+      dispatch({ type: Actions.SavingNewMap });
+      const id = uuid.v4();
+      const createdOn = new Date().getTime();
+      map = Object.assign({}, map, {
+        id,
+        createdOn
+      });
+
+      firebase.database().ref(`maps/${id}`).set(map).then(
+        () => {
+          dispatch({
+            type: Actions.NewMapSaved,
+            map
+          });
+        },
+
+        (error) => {
+          console.error('Failed to save new map', error);
+        }
+      )
+    };
   },
 
   discardNewMap() {

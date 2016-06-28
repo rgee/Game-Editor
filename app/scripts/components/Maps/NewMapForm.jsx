@@ -44,8 +44,8 @@ class NewMapForm extends React.Component {
           <CircularProgress size={2} /> :
           <div>
             <TextField id="displayName" hintText="Display Name" {...displayName} />
-            <TextField type="number" hintText="width" {...width} />
-            <TextField type="number" hintText="height" {...height} />
+            <TextField type="number" hintText="Width" {...width} />
+            <TextField type="number" hintText="Height" {...height} />
           </div>
         }
       </Dialog>
