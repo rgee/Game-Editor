@@ -73,7 +73,7 @@ class Dialogues extends React.Component {
       ];
 
       if (index !== collection.length - 1) {
-        result.push(<Divider />);
+        result.push(<Divider key={`divider-${index}`} />);
       }
 
       return result;
