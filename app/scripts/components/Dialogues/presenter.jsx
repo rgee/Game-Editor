@@ -66,6 +66,7 @@ class Dialogues extends React.Component {
     return flatMap(dialogues, (dialogue, index, collection) => {
       const result = [
         <ListItem
+          key={dialogue.id}
           onTouchTap={() => this.selectDialogue(dialogue.id)}
           primaryText={dialogue.displayName}
         />
