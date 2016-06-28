@@ -11,5 +11,9 @@ export default {
   dialogues: {
     state: 'uninitialized',
     values: {}
+  },
+  maps: {
+    state: 'uninitialized',
+    values: {}
   }
 };

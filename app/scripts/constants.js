@@ -1,11 +1,16 @@
 export const Actions = {
+  // Auth
   Login: 'login',
   Logout: 'logout',
   AttemptingLogin: 'attemptingLogin',
   AttemptingLogout: 'attemptingLogout',
   FetchingUser: 'fetchingUser',
+
+  // Main Menu
   CloseMainMenu: 'closeMainMenu',
   OpenMainMenu: 'openMainMenu',
+
+  // Characters
   FetchingCharacters: 'fetchingCharacters',
   ReceiveCharacters: 'receiveCharacters',
   StartCreatingNewCharacter: 'startCreatingNewCharacter',
@@ -14,6 +19,8 @@ export const Actions = {
   NewCharacterSaved: 'newCharacterSaved',
   DeletingCharacter: 'deletingCharacter',
   CharacterDeleted: 'characterDeleted',
+
+  // Dialogues
   FetchingDialogues: 'fetchingDialogues',
   ReceiveDialogues: 'receiveDialogues',
   NewDialogueSaved: 'newDialogueSaved',
@@ -21,5 +28,15 @@ export const Actions = {
   StartCreatingNewDialogue: 'startCreatingNewDialogue',
   DiscardNewDialogue: 'discardNewDialogue',
   FetchingDialogue: 'fetchingDialogue',
-  ReceiveDialogue: 'receiveDialogue'
+  ReceiveDialogue: 'receiveDialogue',
+
+  // Maps
+  FetchingMaps: 'fetchingMaps',
+  ReceiveMaps: 'receiveMaps',
+  NewMapSaved: 'newMapSaved',
+  SavingNewMap: 'savingNewMap',
+  StartCreatingNewMap: 'startCreatingNewMap',
+  DiscardNewMap: 'discardNewMap',
+  FetchingMap: 'fetchingMap',
+  ReceiveMap: 'receiveMap'
 };
