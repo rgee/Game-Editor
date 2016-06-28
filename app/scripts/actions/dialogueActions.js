@@ -3,6 +3,14 @@ import firebase from '../firebase';
 import uuid from 'uuid';
 
 export default {
+  startNewDialogueCreation() {
+    dispatch({ type: Actions.StartCreatingNewDialogue });
+  },
+
+  discardNewDialogue() {
+    dispatch({ type: Actions.discardNewDialogue });
+  },
+
   create(dialogue) {
     dispatch({ type: Actions.SavingNewDialogue });
     const id = uuid.v4();

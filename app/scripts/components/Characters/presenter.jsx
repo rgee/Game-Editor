@@ -105,6 +105,8 @@ class Characters extends React.Component {
 Characters.PropTypes = {
   characters: PropTypes.array,
   isLoading: PropTypes.bool,
+  onNewCharacterDiscarded: PropTypes.func,
+  onNewCharacterConfirmed: PropTypes.func,
   isCreatingNewCharacter: PropTypes.bool,
   onCharacterAddClicked: PropTypes.func,
   fetchCharacters: PropTypes.func

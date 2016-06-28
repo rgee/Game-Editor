@@ -25,6 +25,11 @@ export default (currentState, action) => {
           [action.dialogue.id]: action.dialogue
         })
       };
+    case Actions.StartCreatingNewDialogue:
+      return {
+        state: 'creating_new',
+        values: currentState.values
+      };
     default:
       return currentState || initialState.dialogues;
   }

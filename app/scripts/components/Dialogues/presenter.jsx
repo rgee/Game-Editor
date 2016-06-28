@@ -64,7 +64,10 @@ class Dialogues extends React.Component {
 Dialogues.PropTypes = {
   dialogues: PropTypes.array,
   isLoading: PropTypes.bool,
-  fetchDialogues: PropTypes.func
+  fetchDialogues: PropTypes.func,
+  isCreatingNew: PropTypes.bool,
+  onAddClicked: PropTypes.func,
+  onDiscardClicked: PropTypes.func
 };
 
 export default withRouter(Dialogues);

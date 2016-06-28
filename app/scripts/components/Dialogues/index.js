@@ -7,6 +7,7 @@ const mapStateToProps = (currentState) => {
   const { dialogues: { values, state } } = currentState;
   return {
     isLoading: state === 'loading',
+    isCreatingNew: state === 'creating_new',
     dialogues: getValues(values)
   };
 };
@@ -15,6 +16,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchDialogues() {
       dispatch(DialogueActions.load());
+    },
+
+    onAddClicked() {
+      dispatch(DialogueActions.startCreatingNewDialogue());
+    },
+
+    onDiscardClicked() {
+      dispatch(DialogueActions.discardNewDialogue());
     }
   };
 };
