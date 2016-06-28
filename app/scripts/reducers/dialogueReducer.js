@@ -30,6 +30,11 @@ export default (currentState, action) => {
         state: 'creating_new',
         values: currentState.values
       };
+    case Actions.DiscardNewDialogue:
+      return {
+        state: 'loaded',
+        values: currentState.values
+      };
     default:
       return currentState || initialState.dialogues;
   }
