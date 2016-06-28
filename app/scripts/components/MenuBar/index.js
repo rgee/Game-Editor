@@ -30,6 +30,13 @@ const mapDispatchToProps = (dispatch) => {
       }
     },
 
+    onMapsClick(router) {
+      if (!router.isActive('/maps')) {
+        router.push('/maps')
+      }
+      dispatch(MainMenuActions.close());
+    },
+
     onCharactersClick(router) {
       if (!router.isActive('/characters')) {
         router.push('/characters')

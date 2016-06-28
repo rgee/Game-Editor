@@ -16,6 +16,7 @@ class MainMenu extends React.Component {
       onDrawerChangeRequest,
       onCharactersClick,
       onDialoguesClick,
+      onMapsClick,
       router
     } = this.props;
 
@@ -34,7 +35,7 @@ class MainMenu extends React.Component {
           {avatarUrl ? <Avatar src={avatarUrl} /> : null}
           <MenuItem onTouchTap={() => onCharactersClick(router)}>Characters</MenuItem>
           <MenuItem>Storyboard</MenuItem>
-          <MenuItem>Maps</MenuItem>
+          <MenuItem onTouchTap={() => onMapsClick(router)}>Maps</MenuItem>
           <MenuItem onTouchTap={() => onDialoguesClick(router)}>Dialogue</MenuItem>
           <Divider />
           <MenuItem onTouchTap={onLogoutClick}>Logout</MenuItem>
@@ -52,7 +53,8 @@ MainMenu.propTypes = {
   onLogoutClick: PropTypes.func.isRequired,
   onDrawerChangeRequest: PropTypes.func.isRequired,
   onCharactersClick: PropTypes.func.isRequired,
-  onDialoguesClick: PropTypes.func.isRequired
+  onDialoguesClick: PropTypes.func.isRequired,
+  onMapsClick: PropTypes.func.isRequired
 };
 
 export default withRouter(MainMenu);

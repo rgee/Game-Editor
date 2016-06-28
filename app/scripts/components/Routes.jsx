@@ -5,6 +5,7 @@ import Home from './Home';
 import App from './App';
 import Dialogues from './Dialogues';
 import Dialogue from './Dialogue';
+import Maps from './Maps';
 import Characters from './Characters';
 import Character from './Character';
 import firebase from '../firebase';
@@ -38,6 +39,7 @@ class Routes extends React.Component {
           <Route path="/characters/:characterName" component={Character} />
           <Route path="/dialogues" component={Dialogues} />
           <Route path="/dialogues/:dialogueId" component={Dialogue} />
+          <Route path="/maps" component={Maps} />
           <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>
