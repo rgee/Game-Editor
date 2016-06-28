@@ -10,7 +10,13 @@ const theme = getMuiTheme({
     primary2Color: green900,
     accent1Color: yellow200
   }
-})
+});
+
+const styles = {
+  content: {
+    padding: 30
+  }
+};
 
 class App extends React.Component {
   render() {
@@ -18,7 +24,9 @@ class App extends React.Component {
       <MuiThemeProvider muiTheme={theme}>
         <div>
           <MenuBar />
-          {this.props.children}
+          <div style={styles.content}>
+            {this.props.children}
+          </div>
         </div>
       </MuiThemeProvider>
     );
