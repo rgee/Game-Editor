@@ -46,9 +46,12 @@ export default (currentState, action) => {
       };
     }
     case Actions.ObstructionRemoved: {
+      const currentMap = currentState.values[action.mapId];
+      delete currentMap.obstructions[action.key];
+      
       return {
         values: Object.assign({}, currentState.values, {
-          [action.map.id]: action.map
+          [action.mapId]: currentMap
         })
       };
     }

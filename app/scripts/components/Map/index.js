@@ -36,8 +36,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.addObstruction(position, ownProps.params.mapId));
     },
 
-    onObstructionRemove(obstruction) {
-      console.debug(`Remove obstruction at (${position.x},${position.y})`)
+    onObstructionRemove(obstructionKey) {
+      dispatch(Actions.removeObstruction(obstructionKey, ownProps.params.mapId));
     }
   };
 };

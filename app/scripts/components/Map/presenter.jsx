@@ -68,8 +68,9 @@ class Map extends React.Component {
         obstructions
       } = this.props;
 
-      if (find(obstructions, position)) {
-        onObstructionRemove(position);
+      const matchingObstruction = find(obstructions, position);
+      if (matchingObstruction) {
+        onObstructionRemove(matchingObstruction.id);
       } else {
         onObstructionAdd(position);
       }

@@ -53,15 +53,16 @@ export default {
     };
   },
 
-  removeObstruction(position, map) {
+  removeObstruction(key, mapId) {
     return (dispatch) => {
       dispatch({ type: Actions.RemovingObstruction });
-      const path = `maps/${map.id}/obstructions`;
-      firebase.database().ref(path).push(position).then(
+      const path = `maps/${mapId}/obstructions/${key}`;
+      firebase.database().ref(path).remove().then(
         () => {
           dispatch({
             type: Actions.ObstructionRemoved,
-            position
+            key,
+            mapId
           });
         },
 
