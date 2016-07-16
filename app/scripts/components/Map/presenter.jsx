@@ -95,7 +95,8 @@ class Map extends React.Component {
     const {
       backgroundImageUrl,
       widthInTiles,
-      heightInTiles
+      heightInTiles,
+      obstructions
     } = this.props;
 
     const {
@@ -120,6 +121,11 @@ class Map extends React.Component {
         ctx.strokeRect(i * tileSize, j * tileSize, tileSize, tileSize);
       }
     }
+
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+    obstructions.forEach(({x, y}) => {
+      ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+    });
   }
 
   render() {
@@ -134,7 +140,11 @@ class Map extends React.Component {
 Map.PropTypes = {
   backgroundImageUrl: PropTypes.string,
   widthInTiles: PropTypes.number,
-  heightInTiles: PropTypes.number
+  heightInTiles: PropTypes.number,
+  obstructions: PropTypes.arrayOf(PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number
+  }))
 };
 
 export default Map;

@@ -6,7 +6,11 @@ const mapStateToProps = (currentState, ownProps) => {
   return {
     backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png',
     widthInTiles: 42,
-    heightInTiles: 26
+    heightInTiles: 26,
+    obstructions: [
+      { x: 0, y: 0 },
+      { x: 10, y: 5 }
+    ]
   };
 };
 
