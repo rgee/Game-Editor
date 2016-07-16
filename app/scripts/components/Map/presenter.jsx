@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 
 
-const width = 800;
-const height = 600;
+const canvasWidth = 800;
+const canvasHeight = 600;
 const speed = 2;
+const tileSize = 32;
 
 class Map extends React.Component {
   constructor(props) {
@@ -82,6 +83,8 @@ class Map extends React.Component {
   updateCanvas() {
     const {
       backgroundImageUrl,
+      widthInTiles,
+      heightInTiles
     } = this.props;
 
     const {
@@ -93,18 +96,25 @@ class Map extends React.Component {
     const { canvas } = this.refs;
     const ctx = canvas.getContext('2d');
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.translate(xViewOffset, yViewOffset);
 
     if (backgroundImage) {
       ctx.drawImage(backgroundImage, 0, 0);
+    }
+
+    ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+    for (var i = 0; i < widthInTiles; i++) {
+      for (var j = 0; j < heightInTiles; j++) {
+        ctx.strokeRect(i * tileSize, j * tileSize, tileSize, tileSize);
+      }
     }
   }
 
   render() {
     return (
       <div>
-        <canvas ref="canvas" width={width} height={height} />
+        <canvas ref="canvas" width={canvasWidth} height={canvasHeight} />
       </div>
     );
   }
@@ -112,8 +122,8 @@ class Map extends React.Component {
 
 Map.PropTypes = {
   backgroundImageUrl: PropTypes.string,
-  xViewOffset: PropTypes.number,
-  yViewOffset: PropTypes.number
+  widthInTiles: PropTypes.number,
+  heightInTiles: PropTypes.number
 };
 
 export default Map;
