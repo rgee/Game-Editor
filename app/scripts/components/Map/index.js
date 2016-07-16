@@ -4,7 +4,7 @@ import MapView from './presenter';
 
 const mapStateToProps = (currentState, ownProps) => {
   return {
-
+    backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png'
   };
 };
 
