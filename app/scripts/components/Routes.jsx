@@ -5,6 +5,7 @@ import Home from './Home';
 import App from './App';
 import Dialogues from './Dialogues';
 import Dialogue from './Dialogue';
+import SingleMap from './Map';
 import Maps from './Maps';
 import Characters from './Characters';
 import Character from './Character';
@@ -40,6 +41,7 @@ class Routes extends React.Component {
           <Route path="/dialogues" component={Dialogues} />
           <Route path="/dialogues/:dialogueId" component={Dialogue} />
           <Route path="/maps" component={Maps} />
+          <Route path="/maps/:mapId" component={SingleMap} />
           <IndexRoute component={Home} onEnter={this.requireAuth.bind(this)} />
         </Route>
       </Router>

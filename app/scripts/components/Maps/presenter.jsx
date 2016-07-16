@@ -6,6 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import AddButton from '../AddButton';
 import NewMapForm from './NewMapForm';
 import { flatMap } from 'lodash';
+import { withRouter } from 'react-router';
 
 const styles = {
   listPaper: {
@@ -17,6 +18,13 @@ const styles = {
 class Maps extends React.Component {
   componentDidMount() {
     this.props.fetchMaps();
+  }
+
+  goToMap(id) {
+    const { router } = this.props;
+    router.push({
+      pathname: `/maps/${id}`
+    });
   }
 
   renderForm() {
@@ -53,7 +61,7 @@ class Maps extends React.Component {
       const result = [
         <ListItem
           key={map.id}
-          onTouchTap={() => {}}
+          onTouchTap={this.goToMap.bind(this, map.id)}
           primaryText={map.displayName}
         />,
         <Divider key={index} />
@@ -88,4 +96,4 @@ Maps.PropTypes = {
   fetchMaps: PropTypes.func
 }
 
-export default Maps;
+export default withRouter(Maps);
