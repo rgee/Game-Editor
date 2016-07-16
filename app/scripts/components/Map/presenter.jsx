@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-
+import { clamp } from 'lodash';
 
 const canvasWidth = 800;
 const canvasHeight = 600;
@@ -61,9 +61,17 @@ class Map extends React.Component {
     });
 
     canvas.addEventListener('mousemove', ((e) => {
-      if (!isDown) {
+      const bgImage = this.state.backgroundImage;
+
+      // Don't do anything on raw mousemoves, or if there's
+      // no background image to clamp to.
+      if (!isDown || !bgImage) {
         return;
       }
+
+      const canvas = this.refs.canvas;
+      const maxWidth = bgImage ? bgImage.width : Number.MAX_VALUE;
+      const maxHeight = bgImage ? bgImage.height : Number.MAX_VALUE;
 
       let xOffset = this.state.xViewOffset;
       let yOffset = this.state.yViewOffset;
@@ -72,6 +80,9 @@ class Map extends React.Component {
       yOffset -= (initialPageY - e.pageY) * speed;
       initialPageY = e.pageY;
       initialPageX = e.pageX;
+
+      xOffset = clamp(xOffset, canvas.width - maxWidth, 0);
+      yOffset = clamp(yOffset, canvas.height - maxHeight, 0);
 
       this.setState({
         xViewOffset: xOffset,
