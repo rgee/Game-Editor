@@ -164,6 +164,8 @@ Map.PropTypes = {
   backgroundImageUrl: PropTypes.string,
   widthInTiles: PropTypes.number,
   heightInTiles: PropTypes.number,
+  onObstructionAdd: PropTypes.func,
+  onObstructionRemove: PropTypes.func,
   obstructions: PropTypes.arrayOf(PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
