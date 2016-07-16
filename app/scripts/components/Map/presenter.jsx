@@ -55,6 +55,10 @@ class Map extends React.Component {
       isDown = false;
     });
 
+    canvas.addEventListener('mouseout', () => {
+      isDown = false;
+    });
+
     canvas.addEventListener('mousemove', ((e) => {
       if (!isDown) {
         return;
@@ -65,8 +69,8 @@ class Map extends React.Component {
 
       xOffset -= (initialPageX - e.pageX) * speed;
       yOffset -= (initialPageY - e.pageY) * speed;
-      initialPageY = yOffset;
-      initialPageX = xOffset;
+      initialPageY = e.pageY;
+      initialPageX = e.pageX;
 
       this.setState({
         xViewOffset: xOffset,
