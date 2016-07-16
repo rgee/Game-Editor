@@ -1,6 +1,7 @@
 import { Actions } from '../constants';
 import firebase from '../firebase';
 import uuid from 'uuid';
+import { remove } from 'lodash';
 
 export default {
   load() {
@@ -49,6 +50,46 @@ export default {
   startNewMapCreation() {
     return {
       type: Actions.StartCreatingNewMap
+    };
+  },
+
+  removeObstruction(position, map) {
+    return (dispatch) => {
+      dispatch({ type: Actions.RemovingObstruction });
+      const path = `maps/${map.id}/obstructions`;
+      firebase.database().ref(path).push(position).then(
+        () => {
+          dispatch({
+            type: Actions.ObstructionRemoved,
+            position
+          });
+        },
+
+        (err) => {
+          console.error('Failed to remove obstruction');
+        }
+      )
+    };
+  },
+
+  addObstruction(position, mapId) {
+    return (dispatch) => {
+      dispatch({ type: Actions.AddingObstruction });
+      const path = `maps/${mapId}/obstructions`;
+      firebase.database().ref(path).push(position).then(
+        (newPos) => {
+          dispatch({
+            type: Actions.ObstructionAdded,
+            mapId,
+            key: newPos.key,
+            position
+          });
+        },
+
+        (err) => {
+          console.error('Failed to add obstruction');
+        }
+      )
     };
   }
 }

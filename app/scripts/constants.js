@@ -38,5 +38,9 @@ export const Actions = {
   StartCreatingNewMap: 'startCreatingNewMap',
   DiscardNewMap: 'discardNewMap',
   FetchingMap: 'fetchingMap',
-  ReceiveMap: 'receiveMap'
+  ReceiveMap: 'receiveMap',
+  AddingObstruction: 'addingObstruction',
+  RemovingObstruction: 'removingObstruction',
+  ObstructionAdded: 'obstructionAdded',
+  ObstructionRemoved: 'obstructionRemoved'
 };

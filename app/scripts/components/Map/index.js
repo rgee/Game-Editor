@@ -1,27 +1,42 @@
 import { connect } from 'react-redux';
 import MapView from './presenter';
+import Actions from '../../actions/mapsActions';
+import { keys, find } from 'lodash';
 
 
 const mapStateToProps = (currentState, ownProps) => {
+  const maps = currentState.maps.values;
+  const map = find(maps, { id: ownProps.params.mapId });
+  if (!map) {
+    return {
+      backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png',
+      widthInTiles: 42,
+      heightInTiles: 26,
+      obstructions: []
+    };
+  }
+
+  const obstructionKeys = keys(map.obstructions || {});
+  const obstructions = obstructionKeys.map((key) => {
+    return Object.assign({}, { id: key }, map.obstructions[key]);
+  });
+
   return {
     backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png',
     widthInTiles: 42,
     heightInTiles: 26,
-    obstructions: [
-      { x: 0, y: 0 },
-      { x: 10, y: 5 }
-    ]
+    obstructions: obstructions || []
   };
 };
 
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onObstructionAdd(position) {
-      console.debug(`Add obstruction at (${position.x},${position.y})`)
+      dispatch(Actions.addObstruction(position, ownProps.params.mapId));
     },
 
-    onObstructionRemove(position) {
+    onObstructionRemove(obstruction) {
       console.debug(`Remove obstruction at (${position.x},${position.y})`)
     }
   };
