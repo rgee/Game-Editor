@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { clamp } from 'lodash';
+import { find, clamp } from 'lodash';
 
 const canvasWidth = 800;
 const canvasHeight = 600;
@@ -51,6 +51,29 @@ class Map extends React.Component {
       initialPageX = e.pageX;
       initialPageY = e.pageY;
     });
+
+    canvas.addEventListener('click', ((e) => {
+      const canvas = this.refs.canvas;
+      const rect = canvas.getBoundingClientRect()
+      const canvasX = e.clientX - rect.left;
+      const canvasY = e.clientY - rect.top;
+      const position = {
+        x: Math.floor(canvasX / tileSize),
+        y: Math.floor(canvasY / tileSize)
+      };
+
+      const {
+        onObstructionAdd,
+        onObstructionRemove,
+        obstructions
+      } = this.props;
+
+      if (find(obstructions, position)) {
+        onObstructionRemove(position);
+      } else {
+        onObstructionAdd(position);
+      }
+    }).bind(this));
 
     canvas.addEventListener('mouseup', () => {
       isDown = false;
@@ -123,7 +146,7 @@ class Map extends React.Component {
     }
 
     ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-    obstructions.forEach(({x, y}) => {
+    obstructions.forEach(({ x, y }) => {
       ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
     });
   }

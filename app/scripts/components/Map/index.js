@@ -17,7 +17,13 @@ const mapStateToProps = (currentState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onObstructionAdd(position) {
+      console.debug(`Add obstruction at (${position.x},${position.y})`)
+    },
 
+    onObstructionRemove(position) {
+      console.debug(`Remove obstruction at (${position.x},${position.y})`)
+    }
   };
 };
 
