@@ -23,7 +23,8 @@ export default {
       const createdOn = new Date().getTime();
       map = Object.assign({}, map, {
         id,
-        createdOn
+        createdOn,
+        obstructions: {}
       });
 
       firebase.database().ref(`maps/${id}`).set(map).then(
