@@ -46,6 +46,7 @@ class Map extends React.Component {
     let isDown = false;
     let initialPageX = null;
     let initialPageY = null;
+    let dragging = false;
     canvas.addEventListener('mousedown', (e) => {
       isDown = true;
       initialPageX = e.pageX;
@@ -53,13 +54,18 @@ class Map extends React.Component {
     });
 
     canvas.addEventListener('click', ((e) => {
+      if (dragging) {
+        dragging = false;
+        return;
+      }
+
       const canvas = this.refs.canvas;
       const rect = canvas.getBoundingClientRect()
-      const canvasX = e.clientX - rect.left;
-      const canvasY = e.clientY - rect.top;
+      const canvasX = (e.clientX - rect.left) - this.state.xViewOffset;
+      const canvasY = (e.clientY - rect.top) - this.state.yViewOffset;
       const position = {
         x: Math.floor(canvasX / tileSize),
-        y: Math.floor(canvasY / tileSize)
+        y: Math.floor (canvasY / tileSize)
       };
 
       const {
@@ -92,6 +98,8 @@ class Map extends React.Component {
       if (!isDown || !bgImage) {
         return;
       }
+
+      dragging = true;
 
       const canvas = this.refs.canvas;
       const maxWidth = bgImage ? bgImage.width : Number.MAX_VALUE;
