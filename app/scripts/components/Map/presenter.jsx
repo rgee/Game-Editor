@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
-import { find, clamp } from 'lodash';
+import { values, find, clamp } from 'lodash';
+import Modes from './modes';
 
-const canvasWidth = 800;
-const canvasHeight = 600;
+const canvasWidth = 1280;
+const canvasHeight = 800;
 const speed = 2;
 const tileSize = 32;
 
@@ -41,6 +42,30 @@ class Map extends React.Component {
     this.updateCanvas();
   }
 
+  handleGridClick(position) {
+    const { mode } = this.props;
+    switch (mode) {
+      case Modes.Obstructions:
+        this.handleObstructionClick(position);
+        break;
+    }
+  }
+
+  handleObstructionClick(position) {
+    const {
+      onObstructionAdd,
+      onObstructionRemove,
+      obstructions
+    } = this.props;
+
+    const matchingObstruction = find(obstructions, position);
+    if (matchingObstruction) {
+      onObstructionRemove(matchingObstruction.id);
+    } else {
+      onObstructionAdd(position);
+    }
+  }
+
   setupEvents() {
     const { canvas } = this.refs;
     let isDown = false;
@@ -67,19 +92,7 @@ class Map extends React.Component {
         x: Math.floor(canvasX / tileSize),
         y: Math.floor (canvasY / tileSize)
       };
-
-      const {
-        onObstructionAdd,
-        onObstructionRemove,
-        obstructions
-      } = this.props;
-
-      const matchingObstruction = find(obstructions, position);
-      if (matchingObstruction) {
-        onObstructionRemove(matchingObstruction.id);
-      } else {
-        onObstructionAdd(position);
-      }
+      this.handleGridClick(position);
     }).bind(this));
 
     canvas.addEventListener('mouseup', () => {
@@ -161,15 +174,25 @@ class Map extends React.Component {
   }
 
   render() {
+    const styles = {
+      margin: '0 auto',
+      display: 'block'
+    };
     return (
       <div>
-        <canvas ref="canvas" width={canvasWidth} height={canvasHeight} />
+        <canvas
+          ref="canvas"
+          style={styles}
+          width={canvasWidth}
+          height={canvasHeight}
+        />
       </div>
     );
   }
 }
 
 Map.PropTypes = {
+  mode: PropTypes.oneOf(values(Modes)),
   backgroundImageUrl: PropTypes.string,
   widthInTiles: PropTypes.number,
   heightInTiles: PropTypes.number,

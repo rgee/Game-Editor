@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import MapView from './presenter';
 import Actions from '../../actions/mapsActions';
 import { keys, find } from 'lodash';
+import Modes from './modes';
 
 
 const mapStateToProps = (currentState, ownProps) => {
@@ -9,9 +10,10 @@ const mapStateToProps = (currentState, ownProps) => {
   const map = find(maps, { id: ownProps.params.mapId });
   if (!map) {
     return {
-      backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png',
-      widthInTiles: 42,
-      heightInTiles: 26,
+      backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
+      widthInTiles: 0,
+      heightInTiles: 0,
+      mode: Modes.Obstructions,
       obstructions: []
     };
   }
@@ -22,9 +24,10 @@ const mapStateToProps = (currentState, ownProps) => {
   });
 
   return {
-    backgroundImageUrl: 'http://i.imgur.com/OvB3Bhb.png',
-    widthInTiles: 42,
-    heightInTiles: 26,
+    backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
+    widthInTiles: map.width,
+    heightInTiles: map.height,
+    mode: Modes.Obstructions,
     obstructions: obstructions || []
   };
 };
