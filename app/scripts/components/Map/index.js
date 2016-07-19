@@ -13,7 +13,7 @@ const mapStateToProps = (currentState, ownProps) => {
       backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
       widthInTiles: 0,
       heightInTiles: 0,
-      mode: Modes.Obstructions,
+      mode: currentState.maps.editingMode,
       obstructions: []
     };
   }
@@ -27,7 +27,7 @@ const mapStateToProps = (currentState, ownProps) => {
     backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
     widthInTiles: map.width,
     heightInTiles: map.height,
-    mode: Modes.Obstructions,
+    mode: currentState.maps.editingMode,
     obstructions: obstructions || []
   };
 };
@@ -41,6 +41,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     onObstructionRemove(obstructionKey) {
       dispatch(Actions.removeObstruction(obstructionKey, ownProps.params.mapId));
+    },
+
+    onNewModeSelected(mode) {
+      dispatch(Actions.changeEditingMode(mode));
     }
   };
 };

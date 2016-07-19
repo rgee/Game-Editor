@@ -4,6 +4,15 @@ import uuid from 'uuid';
 import { remove } from 'lodash';
 
 export default {
+  changeEditingMode(mode) {
+    return (dispatch) => {
+      dispatch({
+        type: Actions.ChangeEditingMode,
+        newMode: mode
+      });
+    };
+  },
+
   load() {
     return (dispatch) => {
       dispatch({ type: Actions.FetchingMaps });

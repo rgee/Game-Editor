@@ -6,31 +6,43 @@ export default (currentState, action) => {
     case Actions.FetchingMaps:
       return {
         state: 'loading',
+        editingMode: currentState.editingMode,
         values: {}
       };
     case Actions.ReceiveMaps:
       return {
         state: 'loaded',
+        editingMode: currentState.editingMode,
         values: Object.assign({}, currentState.values, action.maps)
       };
     case Actions.StartCreatingNewMap:
       return {
         state: 'creating_new',
+        editingMode: currentState.editingMode,
         values: currentState.values
       };
     case Actions.DiscardNewMap:
       return {
         state: 'loaded',
+        editingMode: currentState.editingMode,
+        values: currentState.values
+      };
+    case Actions.ChangeEditingMode:
+      return {
+        state: currentState.state,
+        editingMode: action.newMode,
         values: currentState.values
       };
     case Actions.SavingNewMap:
       return {
         state: 'saving',
+        editingMode: currentState.editingMode,
         values: currentState.values
       };
     case Actions.NewMapSaved:
       return {
         state: 'loaded',
+        editingMode: currentState.editingMode,
         values: Object.assign({}, currentState.values, {
           [action.map.id]: action.map
         })
@@ -40,6 +52,8 @@ export default (currentState, action) => {
       currentMap.obstructions[action.key] = action.position;
 
       return {
+        state: currentState.state,
+        editingMode: currentState.editingMode,
         values: Object.assign({}, currentState.values, {
           [action.mapId]: currentMap
         })
@@ -48,8 +62,10 @@ export default (currentState, action) => {
     case Actions.ObstructionRemoved: {
       const currentMap = currentState.values[action.mapId];
       delete currentMap.obstructions[action.key];
-      
+
       return {
+        state: currentState.state,
+        editingMode: currentState.editingMode,
         values: Object.assign({}, currentState.values, {
           [action.mapId]: currentMap
         })

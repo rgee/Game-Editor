@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 import { values, find, clamp } from 'lodash';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import Modes from './modes';
 
 const canvasWidth = 1280;
@@ -173,6 +175,21 @@ class Map extends React.Component {
     });
   }
 
+  handleModeChange(e, num, payload) {
+    this.props.onNewModeSelected(payload);
+  }
+
+  renderModeMenu() {
+    const { mode } = this.props;
+    return (
+      <DropDownMenu value={mode} onChange={this.handleModeChange.bind(this)}>
+        <MenuItem value={Modes.Obstructions} primaryText="Obstructions" />
+        <MenuItem value={Modes.SpawnPoints} primaryText="Spawn Points" />
+        <MenuItem value={Modes.Triggers} primaryText="Triggers" />
+      </DropDownMenu>
+    );
+  }
+
   render() {
     const styles = {
       margin: '0 auto',
@@ -180,6 +197,7 @@ class Map extends React.Component {
     };
     return (
       <div>
+        {this.renderModeMenu()}
         <canvas
           ref="canvas"
           style={styles}
@@ -198,6 +216,7 @@ Map.PropTypes = {
   heightInTiles: PropTypes.number,
   onObstructionAdd: PropTypes.func,
   onObstructionRemove: PropTypes.func,
+  onNewModeSelected: PropTypes.func,
   obstructions: PropTypes.arrayOf(PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number

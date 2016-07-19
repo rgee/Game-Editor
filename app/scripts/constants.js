@@ -42,5 +42,6 @@ export const Actions = {
   AddingObstruction: 'addingObstruction',
   RemovingObstruction: 'removingObstruction',
   ObstructionAdded: 'obstructionAdded',
-  ObstructionRemoved: 'obstructionRemoved'
+  ObstructionRemoved: 'obstructionRemoved',
+  ChangeEditingMode: 'changeEditingMode'
 };
