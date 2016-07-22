@@ -14,6 +14,7 @@ const mapStateToProps = (currentState, ownProps) => {
       widthInTiles: 0,
       heightInTiles: 0,
       mode: currentState.maps.editingMode,
+      isCreatingSpawnPoint: !!currentState.maps.pendingSpawnPosition,
       obstructions: []
     };
   }
@@ -30,6 +31,7 @@ const mapStateToProps = (currentState, ownProps) => {
     widthInTiles: map.width,
     heightInTiles: map.height,
     mode: currentState.maps.editingMode,
+    isCreatingSpawnPoint: !!currentState.maps.pendingSpawnPosition,
     obstructions: toArrayWithId(map.obstructions),
     spawnPoints: toArrayWithId(map.spawnPoints)
   };

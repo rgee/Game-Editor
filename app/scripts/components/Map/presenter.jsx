@@ -200,6 +200,10 @@ class Map extends React.Component {
     this.props.onNewModeSelected(payload);
   }
 
+  handleCharacterSelected(characterId) {
+    console.debug('Selected character: ' + characterId);
+  }
+
   renderModeMenu() {
     const { mode } = this.props;
     return (
@@ -211,6 +215,19 @@ class Map extends React.Component {
     );
   }
 
+  renderCharacterSelector() {
+    const { isCreatingSpawnPoint } = this.props;
+    if (!isCreatingSpawnPoint) {
+      return null;
+    }
+
+    return (
+      <CharacterSelector
+        onCharacterSelected={this.handleCharacterSelected.bind(this)}
+      />
+    );
+  }
+
   render() {
     const styles = {
       margin: '0 auto',
@@ -219,6 +236,7 @@ class Map extends React.Component {
     return (
       <div>
         {this.renderModeMenu()}
+        {this.renderCharacterSelector()}
         <canvas
           ref="canvas"
           style={styles}
@@ -241,6 +259,14 @@ Map.PropTypes = {
   onSpawnPointAdd: PropTypes.func,
   onSpawnPointCance: PropTypes.func,
   onNewSpawnPointConfirmed: PropTypes.func,
+  isCreatingSpawnPoint: PropTypes.bool,
+  spawnPoints: PropTypes.arrayOf(PropTypes.shape({
+    position: PropTypes.shape({
+      x: PropTypes.number,
+      y: Proptypes.number
+    }),
+    characterId: PropTypes.string
+  })),
   obstructions: PropTypes.arrayOf(PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
