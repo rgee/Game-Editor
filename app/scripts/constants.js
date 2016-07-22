@@ -43,5 +43,11 @@ export const Actions = {
   RemovingObstruction: 'removingObstruction',
   ObstructionAdded: 'obstructionAdded',
   ObstructionRemoved: 'obstructionRemoved',
-  ChangeEditingMode: 'changeEditingMode'
+  ChangeEditingMode: 'changeEditingMode',
+
+  // Maps -spawn points
+  StartCreatingNewSpawnPoint: 'startCreatingNewSpawnPoint',
+  CancelCreatingNewSpawnPoint: 'cancelCreatingNewSpawnPoint',
+  SavingNewSpawnPoint: 'savingNewSpawnPoint',
+  SpawnPointSaved: 'spawnPointSaved'
 };

@@ -3,6 +3,7 @@ import { values, find, clamp } from 'lodash';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Modes from './modes';
+import CharacterSelector from './CharacterSelector';
 
 const canvasWidth = 1280;
 const canvasHeight = 800;
@@ -50,7 +51,14 @@ class Map extends React.Component {
       case Modes.Obstructions:
         this.handleObstructionClick(position);
         break;
+      case Modes.SpawnPoints:
+        this.handleSpawnPointClick(position);
+        break;
     }
+  }
+
+  handleSpawnPointClick(position) {
+
   }
 
   handleObstructionClick(position) {
@@ -143,7 +151,8 @@ class Map extends React.Component {
       backgroundImageUrl,
       widthInTiles,
       heightInTiles,
-      obstructions
+      obstructions,
+      mode
     } = this.props;
 
     const {

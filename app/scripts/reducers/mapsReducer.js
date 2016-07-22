@@ -1,5 +1,6 @@
 import { Actions } from '../constants';
 import initialState from '../store/initialstate';
+import { omit } from 'lodash'
 
 export default (currentState, action) => {
   switch (action.type) {
@@ -70,6 +71,28 @@ export default (currentState, action) => {
           [action.mapId]: currentMap
         })
       };
+    }
+    case Actions.StartCreatingNewSpawnPoint:
+      return Object.assign({}, currentState, {
+        pendingSpawnPosition: action.position
+      });
+    case Actions.CancelCreatingNewSpawnPoint:
+      return omit(currentState, 'pendingSpawnPosition');
+    case Actions.SavingNewSpawnPoint:
+      return Object.assign({}, currentState, {
+        state: 'saving',
+      });
+    case Actions.SpawnPointSaved: {
+      const withoutPending = omit(currentState, 'pendingSpawnPosition');
+      const currentMap = currentState.values[action.mapId];
+      currentMap.spawnPoints[action.key] = action.spawnPoint;
+
+      return Object.assign({}, currentState, {
+        state: 'loaded',
+        values: Object.assign({}, currentState.values, {
+          [action.mapId]: currentMap
+        })
+      });
     }
     default:
       return currentState || initialState.maps

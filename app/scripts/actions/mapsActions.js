@@ -4,6 +4,7 @@ import uuid from 'uuid';
 import { remove } from 'lodash';
 
 export default {
+
   changeEditingMode(mode) {
     return (dispatch) => {
       dispatch({
@@ -101,6 +102,47 @@ export default {
           console.error('Failed to add obstruction');
         }
       )
+    };
+  },
+
+  saveNewSpawnPoint(characterId, mapId) {
+    return (dispatch, getState) => {
+      const state = getState();
+
+      const spawnPoint = {
+        position: state.maps.pendingSpawnPosition,
+        characterId
+      };
+
+      dispatch({ type: Actions.SavingNewSpawnPoint });
+      const path = `maps/${mapId}/spawnPoints`;
+      firebase.database().ref(path).push(spawnPoint).then(
+        (newSpawnPoint) => {
+          dispatch({
+            type: Actions.SpawnPointSaved,
+            mapId,
+            key: newSpawnPoint.key,
+            spawnPoint
+          });
+        },
+
+        (err) => {
+          console.error('Failed to save spawn point.', err);
+        }
+      )
+    };
+  },
+
+  startCreatingNewSpawnPoint(position) {
+    return {
+      type: Actions.StartCreatingNewSpawnPoint,
+      position
+    };
+  },
+
+  cancelCreatingNewSpawnPoint() {
+    return {
+      type: Actions.CancelCreatingNewSpawnPoint
     };
   }
 }

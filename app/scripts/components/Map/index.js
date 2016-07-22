@@ -18,17 +18,20 @@ const mapStateToProps = (currentState, ownProps) => {
     };
   }
 
-  const obstructionKeys = keys(map.obstructions || {});
-  const obstructions = obstructionKeys.map((key) => {
-    return Object.assign({}, { id: key }, map.obstructions[key]);
-  });
+  const toArrayWithId = (object) => {
+    const objKeys = object ? keys(object) : [];
+    return objKeys.map((key) => {
+      return Object.assign({}, { id: key }, object[key]);
+    });
+  }
 
   return {
     backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
     widthInTiles: map.width,
     heightInTiles: map.height,
     mode: currentState.maps.editingMode,
-    obstructions: obstructions || []
+    obstructions: toArrayWithId(map.obstructions),
+    spawnPoints: toArrayWithId(map.spawnPoints)
   };
 };
 
@@ -45,6 +48,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     onNewModeSelected(mode) {
       dispatch(Actions.changeEditingMode(mode));
+    },
+
+    onSpawnPointAdd(position) {
+      dispatch(Actions.startCreatingNewSpawnPoint(position));
+    },
+
+    onSpawnPointCancel() {
+      dispatch(Actions.cancelCreatingNewSpawnPoint());
+    },
+
+    onNewSpawnPointConfirmed(characterId) {
+      const { params: { mapId } } = ownProps;
+      dispatch(Actions.saveNewSpawnPoint(characterId, mapId));
     }
   };
 };
