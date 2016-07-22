@@ -88,7 +88,7 @@ export default (currentState, action) => {
       const spawnPoints = currentMap.spawnPoints || {};
       spawnPoints[action.key] = action.spawnPoint;
 
-      return Object.assign({}, currentState, {
+      return Object.assign({}, withoutPending, {
         state: 'loaded',
         values: Object.assign({}, currentState.values, {
           [action.mapId]: currentMap
