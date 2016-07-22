@@ -189,7 +189,8 @@ class Map extends React.Component {
       break;
       case Modes.SpawnPoints:
         ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
-        spawnPoints.forEach(({ x, y }) => {
+        spawnPoints.forEach((spawnPoint) => {
+          const { position: { x, y } } = spawnPoint;
           ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
         });
       break;
@@ -201,7 +202,7 @@ class Map extends React.Component {
   }
 
   handleCharacterSelected(characterId) {
-    console.debug('Selected character: ' + characterId);
+    this.props.onNewSpawnPointConfirmed(characterId);
   }
 
   renderModeMenu() {

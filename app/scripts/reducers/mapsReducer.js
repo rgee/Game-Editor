@@ -85,7 +85,8 @@ export default (currentState, action) => {
     case Actions.SpawnPointSaved: {
       const withoutPending = omit(currentState, 'pendingSpawnPosition');
       const currentMap = currentState.values[action.mapId];
-      currentMap.spawnPoints[action.key] = action.spawnPoint;
+      const spawnPoints = currentMap.spawnPoints || {};
+      spawnPoints[action.key] = action.spawnPoint;
 
       return Object.assign({}, currentState, {
         state: 'loaded',
