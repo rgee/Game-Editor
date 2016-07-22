@@ -58,7 +58,7 @@ class Map extends React.Component {
   }
 
   handleSpawnPointClick(position) {
-
+    this.props.onSpawnPointAdd(position);
   }
 
   handleObstructionClick(position) {
@@ -152,6 +152,7 @@ class Map extends React.Component {
       widthInTiles,
       heightInTiles,
       obstructions,
+      spawnPoints,
       mode
     } = this.props;
 
@@ -171,6 +172,7 @@ class Map extends React.Component {
       ctx.drawImage(backgroundImage, 0, 0);
     }
 
+    // Grid Lines
     ctx.strokeStyle = 'rgba(0,0,0,0.7)';
     for (var i = 0; i < widthInTiles; i++) {
       for (var j = 0; j < heightInTiles; j++) {
@@ -178,10 +180,20 @@ class Map extends React.Component {
       }
     }
 
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-    obstructions.forEach(({ x, y }) => {
-      ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-    });
+    switch (mode) {
+      case Modes.Obstructions:
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+        obstructions.forEach(({ x, y }) => {
+          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+        });
+      break;
+      case Modes.SpawnPoints:
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+        spawnPoints.forEach(({ x, y }) => {
+          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+        });
+      break;
+    }
   }
 
   handleModeChange(e, num, payload) {
@@ -226,6 +238,9 @@ Map.PropTypes = {
   onObstructionAdd: PropTypes.func,
   onObstructionRemove: PropTypes.func,
   onNewModeSelected: PropTypes.func,
+  onSpawnPointAdd: PropTypes.func,
+  onSpawnPointCance: PropTypes.func,
+  onNewSpawnPointConfirmed: PropTypes.func,
   obstructions: PropTypes.arrayOf(PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
