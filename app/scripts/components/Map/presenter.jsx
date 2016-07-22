@@ -263,7 +263,7 @@ Map.PropTypes = {
   spawnPoints: PropTypes.arrayOf(PropTypes.shape({
     position: PropTypes.shape({
       x: PropTypes.number,
-      y: Proptypes.number
+      y: PropTypes.number
     }),
     characterId: PropTypes.string
   })),
