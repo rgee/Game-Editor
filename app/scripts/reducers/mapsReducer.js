@@ -4,8 +4,9 @@ import { omit } from 'lodash'
 
 const addTriggerTile = (currentState, action) => {
   const currentMap = currentState.values[action.mapId];
-  const triggers = currentMap.triggerTiles || {};
-  triggers[action.key] = action.triggerTile;
+  currentMap.triggerTiles = Object.assign({}, currentMap.triggerTiles, {
+    [action.key]: action.triggerTile
+  });
 
   return Object.assign({}, currentState, {
     state: 'loaded',
@@ -148,6 +149,23 @@ export default (currentState, action) => {
       return Object.assign({}, currentState, {
         editingTriggerTileId: action.triggerId
       });
+    case Actions.DeletingTriggerTile:
+      return Object.assign({}, currentState, {
+        state: 'saving'
+      });
+    case Actions.TriggerTileDeleted: {
+      const currentMap = currentState.values[action.mapId];
+      const triggers = currentMap.triggerTiles;
+      delete triggers[action.triggerId];
+
+      return Object.assign({}, omit(currentState, 'editingTriggerTileId'), {
+        state: 'loaded',
+        editingTriggerTileId: null,
+        values: Object.assign({}, currentState.values, {
+          [action.mapId]: currentMap
+        })
+      });
+    }
     default:
       return currentState || initialState.maps
   }

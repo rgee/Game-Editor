@@ -94,6 +94,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.cancelCreatingNewTriggerTile());
     },
 
+    onTriggerDelete(triggerId) {
+      dispatch(Actions.deleteTrigger(triggerId, ownProps.params.mapId));
+    },
+
     onTriggerEditCancel() {
       dispatch(Actions.cancelEditingTriggerTile());
     },

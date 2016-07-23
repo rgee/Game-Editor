@@ -237,6 +237,10 @@ class Map extends React.Component {
     this.props.onTriggerTileEditSave(this.props.editingTriggerTileId, trigger);
   }
 
+  handleTriggerDelete() {
+    this.props.onTriggerDelete(this.props.editingTriggerTileId);
+  }
+
   renderModeMenu() {
     const { mode } = this.props;
     return (
@@ -282,6 +286,7 @@ class Map extends React.Component {
         <TriggerEditor
           onSubmit={this.handleTriggerEditSave.bind(this)}
           onCancel={onTriggerEditCancel}
+          onDiscard={this.handleTriggerDelete.bind(this)}
           editing={true}
           initialValues={initialValues}
         />
@@ -341,6 +346,7 @@ Map.PropTypes = {
   onTriggerTileEditCancel: PropTypes.func,
   onTriggerTileEditStart: PropTypes.func,
   onTriggerTileEditSave: PropTypes.func,
+  onTriggerDelete: PropTypes.func,
   isCreatingTriggerTile: PropTypes.bool,
   isEditingTriggerTile: PropTypes.bool,
   triggerTiles: PropTypes.arrayOf(PropTypes.shape({

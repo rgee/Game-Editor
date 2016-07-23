@@ -201,7 +201,23 @@ export default {
           console.error('Failed to update trigger tile.', err);
         }
       )
-    }
+    };
+  },
+
+  deleteTrigger(triggerId, mapId) {
+    return (dispatch) => {
+      dispatch({ type: Actions.DeletingTriggerTile });
+      const path =`maps/${mapId}/triggerTiles/${triggerId}`;
+      firebase.database().ref(path).remove().then(
+        () => {
+          dispatch({
+            type: Actions.TriggerTileDeleted,
+            triggerId,
+            mapId
+          });
+        }
+      )
+    };
   },
 
   editTriggerTile(triggerId) {
