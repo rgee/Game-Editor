@@ -214,6 +214,7 @@ class Map extends React.Component {
           const { position: { x, y } } = spawnPoint;
           ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
         });
+      break;
       case Modes.Triggers:
         ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
         triggerTiles.forEach((trigger) => {
