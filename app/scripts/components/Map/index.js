@@ -6,16 +6,21 @@ import Modes from './modes';
 
 
 const mapStateToProps = (currentState, ownProps) => {
-  const maps = currentState.maps.values;
+  const mapState = currentState.maps;
+  const maps = mapState.values;
   const map = find(maps, { id: ownProps.params.mapId });
   if (!map) {
     return {
       backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
       widthInTiles: 0,
       heightInTiles: 0,
-      mode: currentState.maps.editingMode,
-      isCreatingSpawnPoint: !!currentState.maps.pendingSpawnPosition,
-      obstructions: []
+      mode: mapState.editingMode,
+      isCreatingSpawnPoint: !!mapState.pendingSpawnPosition,
+      isCreatingTriggerTile: !!mapState.pendingTriggerTilePosition,
+      isEditingTriggerTile: !!mapState.editingTriggerTileId,
+      editingTriggerTileId: mapState.editingTriggerTileId,
+      obstructions: [],
+      triggerTiles: []
     };
   }
 
@@ -30,10 +35,14 @@ const mapStateToProps = (currentState, ownProps) => {
     backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
     widthInTiles: map.width,
     heightInTiles: map.height,
-    mode: currentState.maps.editingMode,
-    isCreatingSpawnPoint: !!currentState.maps.pendingSpawnPosition,
+    mode: mapState.editingMode,
+    isCreatingSpawnPoint: !!mapState.pendingSpawnPosition,
+    isCreatingTriggerTile: !!mapState.pendingTriggerTilePosition,
+    isEditingTriggerTile: !!mapState.editingTriggerTileId,
+    editingTriggerTileId: mapState.editingTriggerTileId,
     obstructions: toArrayWithId(map.obstructions),
-    spawnPoints: toArrayWithId(map.spawnPoints)
+    spawnPoints: toArrayWithId(map.spawnPoints),
+    triggerTiles: toArrayWithId(map.triggerTiles)
   };
 };
 
@@ -60,13 +69,34 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.startCreatingNewSpawnPoint(position));
     },
 
+    onNewSpawnPointConfirmed(characterId) {
+      const { params: { mapId } } = ownProps;
+      dispatch(Actions.saveNewSpawnPoint(characterId, mapId));
+    },
+
     onSpawnPointCancel() {
       dispatch(Actions.cancelCreatingNewSpawnPoint());
     },
 
-    onNewSpawnPointConfirmed(characterId) {
+    onTriggerTileEditStart(triggerId) {
+      dispatch(Actions.editTriggerTile(triggerId));
+    },
+
+    onTriggerTileEditSave(triggerKey, trigger) {
+      dispatch(Actions.updateEditingTriggerTile(trigger, triggerKey, ownProps.params.mapId));
+    },
+
+    onTriggerTileAdd(position) {
+      dispatch(Actions.startCreatingNewTriggerTile(position));
+    },
+
+    onTriggerTileCancel() {
+      dispatch(Actions.cancelCreatingNewTriggerTile());
+    },
+
+    onTriggerTileSave(trigger) {
       const { params: { mapId } } = ownProps;
-      dispatch(Actions.saveNewSpawnPoint(characterId, mapId));
+      dispatch(Actions.saveNewTriggerTile(trigger, mapId));
     }
   };
 };

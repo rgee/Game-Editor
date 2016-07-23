@@ -117,7 +117,6 @@ export default {
             mapId
           });
         },
-
         (err) => {
           console.error('Failed to remove spawn point');
         }
@@ -164,5 +163,55 @@ export default {
     return {
       type: Actions.CancelCreatingNewSpawnPoint
     };
+  },
+
+  startCreatingNewTriggerTile(position) {
+    return {
+      type: Actions.StartCreatingNewTriggerTile,
+      position
+    };
+  },
+
+  cancelCreatingNewTriggerTile() {
+    return {
+      type: Actions.CancelCreatingNewTriggerTile
+    };
+  },
+
+  updateEditingTriggerTile(trigger, key, mapId) {
+
+  },
+
+  editTriggerTile(triggerId) {
+    return {
+      type: Actions.StartEditingTriggerTile,
+      triggerId
+    };
+  },
+
+  saveNewTriggerTile(trigger, mapId) {
+    return (dispatch, getState) => {
+      const state = getState();
+      const fullTrigger = Object.assign({}, trigger, {
+        position: state.maps.pendingTriggerTilePosition
+      });
+
+      dispatch({ type: Actions.SavingNewTriggerTile });
+      const path = `maps/${mapId}/triggerTiles`;
+      firebase.database().ref(path).push(fullTrigger).then(
+        (newTrigger) => {
+          dispatch({
+            type: Actions.TriggerTileSaved,
+            mapId,
+            key: newTrigger.key,
+            triggerTile: fullTrigger
+          });
+        },
+
+        (err) => {
+          console.error('Failed to save trigger tile.', err);
+        }
+      )
+    }
   }
 }

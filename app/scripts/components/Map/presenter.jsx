@@ -4,6 +4,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Modes from './modes';
 import CharacterSelector from './CharacterSelector';
+import TriggerEditor from './TriggerEditor';
 
 const canvasWidth = 1280;
 const canvasHeight = 800;
@@ -54,6 +55,19 @@ class Map extends React.Component {
       case Modes.SpawnPoints:
         this.handleSpawnPointClick(position);
         break;
+      case Modes.Triggers:
+        this.handleTriggerTileClick(position);
+        break;
+    }
+  }
+
+  handleTriggerTileClick(position) {
+    const { triggerTiles } = this.props;
+    const matchingTile = find(triggerTiles, { position });
+    if (matchingTile) {
+      this.props.onTriggerTileEditStart(matchingTile.id);
+    } else {
+      this.props.onTriggerTileAdd(position);
     }
   }
 
@@ -159,6 +173,7 @@ class Map extends React.Component {
       heightInTiles,
       obstructions,
       spawnPoints,
+      triggerTiles,
       mode
     } = this.props;
 
@@ -199,6 +214,12 @@ class Map extends React.Component {
           const { position: { x, y } } = spawnPoint;
           ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
         });
+      case Modes.Triggers:
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+        triggerTiles.forEach((trigger) => {
+          const { position: { x, y } } = trigger;
+          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+        });
       break;
     }
   }
@@ -236,6 +257,26 @@ class Map extends React.Component {
     );
   }
 
+  renderTriggerEditor() {
+    const {
+      onTriggerTileSave,
+      editingTriggerTileId,
+      isCreatingTriggerTile,
+      isEditingTriggerTile
+    } = this.props;
+
+    if (!(isEditingTriggerTile || isCreatingTriggerTile)) {
+      return null;
+    }
+
+    return (
+      <TriggerEditor
+        onSubmit={onTriggerTileSave}
+        editing={!!editingTriggerTileId}
+      />
+    );
+  }
+
   render() {
     const styles = {
       margin: '0 auto',
@@ -245,6 +286,7 @@ class Map extends React.Component {
       <div>
         {this.renderModeMenu()}
         {this.renderCharacterSelector()}
+        {this.renderTriggerEditor()}
         <canvas
           ref="canvas"
           style={styles}
@@ -255,6 +297,11 @@ class Map extends React.Component {
     );
   }
 }
+
+const PositionPropType = PropTypes.shape({
+  x: PropTypes.number,
+  y: PropTypes.number
+});
 
 Map.PropTypes = {
   mode: PropTypes.oneOf(values(Modes)),
@@ -269,17 +316,21 @@ Map.PropTypes = {
   onSpawnPointCancel: PropTypes.func,
   onNewSpawnPointConfirmed: PropTypes.func,
   isCreatingSpawnPoint: PropTypes.bool,
+  onTriggerTileAdd: PropTypes.func,
+  onTriggerTileCancel: PropTypes.func,
+  onTriggerTileEditStart: PropTypes.func,
+  onTriggerTileEditSave: PropTypes.func,
+  isCreatingTriggerTile: PropTypes.bool,
+  isEditingTriggerTile: PropTypes.bool,
+  triggerTiles: PropTypes.arrayOf(PropTypes.shape({
+    position: PositionPropType,
+    actions: PropTypes.array
+  })),
   spawnPoints: PropTypes.arrayOf(PropTypes.shape({
-    position: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number
-    }),
+    position: PositionPropType,
     characterId: PropTypes.string
   })),
-  obstructions: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number
-  }))
+  obstructions: PropTypes.arrayOf(PositionPropType)
 };
 
 export default Map;

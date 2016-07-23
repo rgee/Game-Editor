@@ -45,11 +45,18 @@ export const Actions = {
   ObstructionRemoved: 'obstructionRemoved',
   ChangeEditingMode: 'changeEditingMode',
 
-  // Maps -spawn points
+  // Maps - spawn points
   StartCreatingNewSpawnPoint: 'startCreatingNewSpawnPoint',
   CancelCreatingNewSpawnPoint: 'cancelCreatingNewSpawnPoint',
   SavingNewSpawnPoint: 'savingNewSpawnPoint',
   SpawnPointSaved: 'spawnPointSaved',
   RemovingSpawnPoint: 'removingSpawnPoint',
-  SpawnPointRemoved: 'spawnPointRemoved'
+  SpawnPointRemoved: 'spawnPointRemoved',
+
+  // Maps - trigger tiles
+  StartCreatingNewTriggerTile: 'startCreatingNewtriggerTile',
+  CancelCreatingNewTriggerTile: 'cancelCreatingNewTriggerTile',
+  StartEditingTriggerTile: 'startEditingTriggerTile',
+  SavingNewTriggerTile: 'savingNewTriggerTile',
+  TriggerTileSaved: 'triggerTileSaved'
 };

@@ -111,6 +111,34 @@ export default (currentState, action) => {
         })
       };
     }
+    case Actions.SavingNewTriggerTile:
+      return Object.assign({}, currentState, {
+        state: 'saving'
+      });
+    case Actions.TriggerTileSaved: {
+      const withoutPending = omit(currentState, 'pendingTriggerTilePosition');
+      const currentMap = currentState.values[action.mapId];
+      const spawnPoints = currentMap.triggerTiles || {};
+      spawnPoints[action.key] = action.triggerTile;
+
+      return Object.assign({}, withoutPending, {
+        state: 'loaded',
+        values: Object.assign({}, currentState.values, {
+          [action.mapId]: currentMap
+        })
+      });
+
+    }
+    case Actions.StartCreatingNewTriggerTile:
+      return Object.assign({}, currentState, {
+        pendingTriggerTilePosition: action.position
+      });
+    case Actions.CancelCreatingNewTriggerTile:
+      return omit(currentState, 'pendingTriggerTilePosition');
+    case Actions.StartEditingTriggerTile:
+      return Object.assign({}, currentState, {
+        editingTriggerTileId: action.triggerId
+      });
     default:
       return currentState || initialState.maps
   }

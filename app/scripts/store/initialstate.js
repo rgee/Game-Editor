@@ -15,6 +15,8 @@ export default {
   maps: {
     state: 'uninitialized',
     editingMode: 'obstructions',
-    values: {}
+    values: {},
+    pendingTriggerTilePosition: null,
+    pendingSpawnPosition: null
   }
 };
