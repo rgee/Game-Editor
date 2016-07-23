@@ -58,7 +58,13 @@ class Map extends React.Component {
   }
 
   handleSpawnPointClick(position) {
-    this.props.onSpawnPointAdd(position);
+    const { spawnPoints } = this.props;
+    const matchingSpawnPoint = find(spawnPoints, { position });
+    if (matchingSpawnPoint) {
+      this.props.onSpawnPointRemove(matchingSpawnPoint.id);
+    } else {
+      this.props.onSpawnPointAdd(position);
+    }
   }
 
   handleObstructionClick(position) {
@@ -259,6 +265,7 @@ Map.PropTypes = {
   onObstructionRemove: PropTypes.func,
   onNewModeSelected: PropTypes.func,
   onSpawnPointAdd: PropTypes.func,
+  onSpawnPointRemove: PropTypes.func,
   onSpawnPointCancel: PropTypes.func,
   onNewSpawnPointConfirmed: PropTypes.func,
   isCreatingSpawnPoint: PropTypes.bool,

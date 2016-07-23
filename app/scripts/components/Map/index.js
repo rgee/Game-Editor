@@ -52,6 +52,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.changeEditingMode(mode));
     },
 
+    onSpawnPointRemove(spawnPointKey) {
+      dispatch(Actions.removeSpawnPoint(spawnPointKey, ownProps.params.mapId));
+    },
+
     onSpawnPointAdd(position) {
       dispatch(Actions.startCreatingNewSpawnPoint(position));
     },

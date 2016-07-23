@@ -105,6 +105,26 @@ export default {
     };
   },
 
+  removeSpawnPoint(key, mapId) {
+    return (dispatch) => {
+      dispatch({ type: Actions.RemovingSpawnPoint });
+      const path = `maps/${mapId}/spawnPoints/${key}`;
+      firebase.database().ref(path).remove().then(
+        () => {
+          dispatch({
+            type: Actions.SpawnPointRemoved,
+            key,
+            mapId
+          });
+        },
+
+        (err) => {
+          console.error('Failed to remove spawn point');
+        }
+      )
+    }
+  },
+
   saveNewSpawnPoint(characterId, mapId) {
     return (dispatch, getState) => {
       const state = getState();

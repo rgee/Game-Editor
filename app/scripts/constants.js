@@ -49,5 +49,7 @@ export const Actions = {
   StartCreatingNewSpawnPoint: 'startCreatingNewSpawnPoint',
   CancelCreatingNewSpawnPoint: 'cancelCreatingNewSpawnPoint',
   SavingNewSpawnPoint: 'savingNewSpawnPoint',
-  SpawnPointSaved: 'spawnPointSaved'
+  SpawnPointSaved: 'spawnPointSaved',
+  RemovingSpawnPoint: 'removingSpawnPoint',
+  SpawnPointRemoved: 'spawnPointRemoved'
 };

@@ -82,6 +82,10 @@ export default (currentState, action) => {
       return Object.assign({}, currentState, {
         state: 'saving',
       });
+    case Actions.RemovingSpawnPoint:
+      return Object.assign({}, currentState, {
+        state: 'saving'
+      });
     case Actions.SpawnPointSaved: {
       const withoutPending = omit(currentState, 'pendingSpawnPosition');
       const currentMap = currentState.values[action.mapId];
@@ -94,6 +98,18 @@ export default (currentState, action) => {
           [action.mapId]: currentMap
         })
       });
+    }
+    case Actions.SpawnPointRemoved: {
+      const currentMap = currentState.values[action.mapId];
+      delete currentMap.spawnPoints[action.key];
+
+      return {
+        state: currentState.state,
+        editingMode: currentState.editingMode,
+        values: Object.assign({}, currentState.values, {
+          [action.mapId]: currentMap
+        })
+      };
     }
     default:
       return currentState || initialState.maps
