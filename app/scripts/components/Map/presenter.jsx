@@ -270,10 +270,17 @@ class Map extends React.Component {
       return null;
     }
 
+    let initialValues = {};
+    if (isEditingTriggerTile) {
+      initialValues = find(this.props.triggerTiles, { id: editingTriggerTileId });
+    }
+
     return (
       <TriggerEditor
         onSubmit={onTriggerTileSave}
+        onCancel={this.props.onTriggerTileCancel}
         editing={!!editingTriggerTileId}
+        initialValues={initialValues}
       />
     );
   }
