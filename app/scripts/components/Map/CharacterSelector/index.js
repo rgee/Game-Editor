@@ -7,7 +7,7 @@ const mapStateToProps = (currentState, ownProps) => {
   const { characters: { values, state } } = currentState;
   return {
     isLoading: state === 'loading',
-    characters: getValues(values).map(char => pick(char, ['name', 'id']))
+    characters: getValues(values).map((char) => pick(char, ['name', 'id']))
   }
 };
 

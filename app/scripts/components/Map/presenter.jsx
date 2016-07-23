@@ -225,6 +225,7 @@ class Map extends React.Component {
     return (
       <CharacterSelector
         onCharacterSelected={this.handleCharacterSelected.bind(this)}
+        onDiscard={this.props.onSpawnPointCancel}
       />
     );
   }
@@ -258,7 +259,7 @@ Map.PropTypes = {
   onObstructionRemove: PropTypes.func,
   onNewModeSelected: PropTypes.func,
   onSpawnPointAdd: PropTypes.func,
-  onSpawnPointCance: PropTypes.func,
+  onSpawnPointCancel: PropTypes.func,
   onNewSpawnPointConfirmed: PropTypes.func,
   isCreatingSpawnPoint: PropTypes.bool,
   spawnPoints: PropTypes.arrayOf(PropTypes.shape({
