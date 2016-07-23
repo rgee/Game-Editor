@@ -94,6 +94,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.cancelCreatingNewTriggerTile());
     },
 
+    onTriggerEditCancel() {
+      dispatch(Actions.cancelEditingTriggerTile());
+    },
+
     onTriggerTileSave(trigger) {
       const { params: { mapId } } = ownProps;
       dispatch(Actions.saveNewTriggerTile(trigger, mapId));

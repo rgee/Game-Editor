@@ -2,6 +2,19 @@ import { Actions } from '../constants';
 import initialState from '../store/initialstate';
 import { omit } from 'lodash'
 
+const addTriggerTile = (currentState, action) => {
+  const currentMap = currentState.values[action.mapId];
+  const triggers = currentMap.triggerTiles || {};
+  triggers[action.key] = action.triggerTile;
+
+  return Object.assign({}, currentState, {
+    state: 'loaded',
+    values: Object.assign({}, currentState.values, {
+      [action.mapId]: currentMap
+    })
+  });
+};
+
 export default (currentState, action) => {
   switch (action.type) {
     case Actions.FetchingMaps:
@@ -117,18 +130,14 @@ export default (currentState, action) => {
       });
     case Actions.TriggerTileSaved: {
       const withoutPending = omit(currentState, 'pendingTriggerTilePosition');
-      const currentMap = currentState.values[action.mapId];
-      const spawnPoints = currentMap.triggerTiles || {};
-      spawnPoints[action.key] = action.triggerTile;
-
-      return Object.assign({}, withoutPending, {
-        state: 'loaded',
-        values: Object.assign({}, currentState.values, {
-          [action.mapId]: currentMap
-        })
-      });
-
+      return addTriggerTile(withoutPending, action);
     }
+    case Actions.TriggerTileUpdated: {
+      const withoutEditing = omit(currentState, 'editingTriggerTileId');
+      return addTriggerTile(withoutEditing, action);
+    }
+    case Actions.CancelEditingTriggerTile:
+      return omit(currentState, 'editingTriggerTileId');
     case Actions.StartCreatingNewTriggerTile:
       return Object.assign({}, currentState, {
         pendingTriggerTilePosition: action.position

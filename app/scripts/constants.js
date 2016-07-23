@@ -58,5 +58,8 @@ export const Actions = {
   CancelCreatingNewTriggerTile: 'cancelCreatingNewTriggerTile',
   StartEditingTriggerTile: 'startEditingTriggerTile',
   SavingNewTriggerTile: 'savingNewTriggerTile',
-  TriggerTileSaved: 'triggerTileSaved'
+  TriggerTileSaved: 'triggerTileSaved',
+  UpdatingTriggerTile: 'updatingTriggerTile',
+  TriggerTileUpdated: 'triggerTileUpdated',
+  CancelEditingTriggerTile: 'cancelEditingTriggerTile'
 };

@@ -178,14 +178,42 @@ export default {
     };
   },
 
-  updateEditingTriggerTile(trigger, key, mapId) {
+  updateEditingTriggerTile(trigger, triggerId, mapId) {
+    return (dispatch, getState) => {
+      const maps = getState().maps.values;
+      const { triggerTiles } = maps[mapId];
+      const existingTrigger = triggerTiles[triggerId];
+      const updated = Object.assign({}, existingTrigger, trigger);
+      dispatch({ type: Actions.UpdatingTriggerTile });
 
+      const path = `maps/${mapId}/triggerTiles/${triggerId}`;
+      firebase.database().ref(path).set(updated).then(
+        () => {
+          dispatch({
+            type: Actions.TriggerTileUpdated,
+            mapId,
+            key: triggerId,
+            triggerTile: updated
+          });
+        },
+
+        (err) => {
+          console.error('Failed to update trigger tile.', err);
+        }
+      )
+    }
   },
 
   editTriggerTile(triggerId) {
     return {
       type: Actions.StartEditingTriggerTile,
       triggerId
+    };
+  },
+
+  cancelEditingTriggerTile() {
+    return {
+      type: Actions.CancelEditingTriggerTile
     };
   },
 

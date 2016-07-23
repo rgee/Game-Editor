@@ -233,6 +233,10 @@ class Map extends React.Component {
     this.props.onNewSpawnPointConfirmed(characterId);
   }
 
+  handleTriggerEditSave(trigger) {
+    this.props.onTriggerTileEditSave(this.props.editingTriggerTileId, trigger);
+  }
+
   renderModeMenu() {
     const { mode } = this.props;
     return (
@@ -263,24 +267,32 @@ class Map extends React.Component {
       onTriggerTileSave,
       editingTriggerTileId,
       isCreatingTriggerTile,
-      isEditingTriggerTile
+      isEditingTriggerTile,
+      onTriggerTileCancel,
+      onTriggerEditCancel
     } = this.props;
 
     if (!(isEditingTriggerTile || isCreatingTriggerTile)) {
       return null;
     }
 
-    let initialValues = {};
     if (isEditingTriggerTile) {
-      initialValues = find(this.props.triggerTiles, { id: editingTriggerTileId });
+      const initialValues = find(this.props.triggerTiles, { id: editingTriggerTileId });
+      return (
+        <TriggerEditor
+          onSubmit={this.handleTriggerEditSave.bind(this)}
+          onCancel={onTriggerEditCancel}
+          editing={true}
+          initialValues={initialValues}
+        />
+      );
     }
 
     return (
       <TriggerEditor
         onSubmit={onTriggerTileSave}
-        onCancel={this.props.onTriggerTileCancel}
-        editing={!!editingTriggerTileId}
-        initialValues={initialValues}
+        onCancel={onTriggerTileCancel}
+        editing={false}
       />
     );
   }
@@ -326,6 +338,7 @@ Map.PropTypes = {
   isCreatingSpawnPoint: PropTypes.bool,
   onTriggerTileAdd: PropTypes.func,
   onTriggerTileCancel: PropTypes.func,
+  onTriggerTileEditCancel: PropTypes.func,
   onTriggerTileEditStart: PropTypes.func,
   onTriggerTileEditSave: PropTypes.func,
   isCreatingTriggerTile: PropTypes.bool,
