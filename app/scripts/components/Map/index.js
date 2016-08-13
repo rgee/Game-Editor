@@ -65,6 +65,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(Actions.saveNewTurnEvent(turnEvent, mapId));
     },
 
+    onTurnEventEditSave(turnEventKey, turnEvent) {
+      const { params: { mapId } } = ownProps;
+      dispatch(Actions.updateEditingTurnEvent(turnEvent, turnEventKey, mapId));
+    },
+
     onTurnEventCancel() {
       dispatch(Actions.cancelCreatingNewTurnEvent());
     },

@@ -179,6 +179,10 @@ export default (currentState, action) => {
         })
       });
     }
+    case Actions.TurnEventUpdated: {
+      const withoutEditing = omit(currentState, 'editingTurnEventId');
+      return addTurnEvent(withoutEditing, action);
+    }
     case Actions.CancelEditingTurnEvent: {
       return omit(currentState, 'editingTurnEventId');
     }

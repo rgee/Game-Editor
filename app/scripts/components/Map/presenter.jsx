@@ -246,8 +246,8 @@ class Map extends React.Component {
     this.props.onTriggerDelete(this.props.editingTriggerTileId);
   }
 
-  handleTurnEventSave() {
-    this.props.onTurnEventEditSave(this.props.editingTurnEventId);
+  handleTurnEventSave(turnEvent) {
+    this.props.onTurnEventEditSave(this.props.editingTurnEventId, turnEvent);
   }
 
   handleTurnEventDelete() {

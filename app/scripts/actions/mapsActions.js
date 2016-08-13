@@ -211,7 +211,7 @@ export default {
       )
     };
   },
-  
+
   deleteTurnEvent(turnEventId, mapId) {
     return (dispatch) => {
       dispatch({ type: Actions.DeletingTurnEvent });
@@ -262,6 +262,32 @@ export default {
 
         (err) => {
           console.error('Failed to update trigger tile.', err);
+        }
+      )
+    };
+  },
+
+  updateEditingTurnEvent(turnEvent, turnEventId, mapId) {
+    return (dispatch, getState) => {
+      const maps = getState().maps.values;
+      const { turnEvents } = maps[mapId];
+      const existingTurnEvent = turnEvents[turnEventId];
+      const updated = Object.assign({}, existingTurnEvent, turnEvent);
+      dispatch({ type: Actions.UpdatingTurnEvent });
+
+      const path = `maps/${mapId}/turnEvents/${turnEventId}`;
+      firebase.database().ref(path).set(updated).then(
+        () => {
+          dispatch({
+            type: Actions.TurnEventUpdated,
+            mapId,
+            key: turnEventId,
+            turnEvent: updated
+          });
+        },
+
+        (err) => {
+          console.error('Failed to update turn event.', err);
         }
       )
     };
