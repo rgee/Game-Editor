@@ -1,10 +1,14 @@
 import React, { PropTypes } from 'react'
-import { values, find, clamp } from 'lodash';
+import { keys, groupBy, values, find, clamp } from 'lodash';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import Modes from './modes';
 import CharacterSelector from './CharacterSelector';
 import TriggerEditor from './TriggerEditor';
+import IconButton from 'material-ui/IconButton';
+import Plus from 'material-ui/svg-icons/content/add-box';
+
 
 const canvasWidth = 1280;
 const canvasHeight = 800;
@@ -241,14 +245,20 @@ class Map extends React.Component {
     this.props.onTriggerDelete(this.props.editingTriggerTileId);
   }
 
-  renderModeMenu() {
+  renderTopMenu() {
     const { mode } = this.props;
+    const styles = {
+      marginBottom: 15
+    };
+
     return (
-      <DropDownMenu value={mode} onChange={this.handleModeChange.bind(this)}>
-        <MenuItem value={Modes.Obstructions} primaryText="Obstructions" />
-        <MenuItem value={Modes.SpawnPoints} primaryText="Spawn Points" />
-        <MenuItem value={Modes.Triggers} primaryText="Triggers" />
-      </DropDownMenu>
+      <div style={styles}>
+        <DropDownMenu value={mode} onChange={this.handleModeChange.bind(this)}>
+          <MenuItem value={Modes.Obstructions} primaryText="Obstructions" />
+          <MenuItem value={Modes.SpawnPoints} primaryText="Spawn Points" />
+          <MenuItem value={Modes.Triggers} primaryText="Triggers" />
+        </DropDownMenu>
+      </div>
     );
   }
 
@@ -302,14 +312,65 @@ class Map extends React.Component {
     );
   }
 
+  renderTurnEvents() {
+    const { turnEvents } = this.props;
+    const eventsByTurn = groupBy(turnEvents, 'turn');
+    const turnKeys = keys(eventsByTurn);
+    turnKeys.sort();
+
+    const eventStyles = {
+      marginBottom: 10
+    };
+
+    const events = turnKeys.map((turn) => {
+      const eventsOnThisTurn = eventsByTurn[turn];
+      const labelStyles = {
+        marginRight: 10
+      };
+
+      const buttonStyles = {
+        marginRight: 10
+      };
+      return (
+        <div style={eventStyles} key={`turn-${turn}`}>
+          <strong style={labelStyles}>{`Turn ${turn}:`}</strong>
+          {eventsOnThisTurn.map((event, index) => {
+            return (
+              <RaisedButton
+                key={index}
+                label={event.eventName}
+                style={buttonStyles}
+              />
+            )
+          })}
+        </div>
+      );
+    });
+
+    const iconButtonStyles = {
+      verticalAlign: 'middle'
+    };
+
+    return (
+      <div>
+        <h2>
+          Turn Events
+          <IconButton style={iconButtonStyles}><Plus /></IconButton>
+        </h2>
+        <div>
+          {events}
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const styles = {
-      margin: '0 auto',
       display: 'block'
     };
     return (
       <div>
-        {this.renderModeMenu()}
+        {this.renderTopMenu()}
         {this.renderCharacterSelector()}
         {this.renderTriggerEditor()}
         <canvas
@@ -318,6 +379,7 @@ class Map extends React.Component {
           width={canvasWidth}
           height={canvasHeight}
         />
+        {this.renderTurnEvents()}
       </div>
     );
   }
@@ -349,9 +411,14 @@ Map.PropTypes = {
   onTriggerDelete: PropTypes.func,
   isCreatingTriggerTile: PropTypes.bool,
   isEditingTriggerTile: PropTypes.bool,
+  turnEvents: PropTypes.arrayOf(PropTypes.shape({
+    turn: PropTypes.number,
+    eventName: PropTypes.string
+  })),
   triggerTiles: PropTypes.arrayOf(PropTypes.shape({
     position: PositionPropType,
-    actions: PropTypes.array
+    eventName: PropTypes.string,
+    description: PropTypes.string
   })),
   spawnPoints: PropTypes.arrayOf(PropTypes.shape({
     position: PositionPropType,
