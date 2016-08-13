@@ -63,5 +63,9 @@ export const Actions = {
   TriggerTileUpdated: 'triggerTileUpdated',
   CancelEditingTriggerTile: 'cancelEditingTriggerTile',
   DeletingTriggerTile: 'deletingTriggerTile',
-  TriggerTileDeleted: 'triggerTileDeleted'
+  TriggerTileDeleted: 'triggerTileDeleted',
+
+  // Maps - turn events
+  StartCreatingNewTurnEvent: 'startCreatingNewTurnEvent',
+  CancelCreatingNewTurnEvent: 'cancelCreatingNewTurnEvent'
 };

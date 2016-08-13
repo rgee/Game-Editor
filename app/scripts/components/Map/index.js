@@ -36,19 +36,42 @@ const mapStateToProps = (currentState, ownProps) => {
     widthInTiles: map.width,
     heightInTiles: map.height,
     mode: mapState.editingMode,
+    isCreatingTurnEvent: mapState.creatingNewTurnEvent,
     isCreatingSpawnPoint: !!mapState.pendingSpawnPosition,
     isCreatingTriggerTile: !!mapState.pendingTriggerTilePosition,
     isEditingTriggerTile: !!mapState.editingTriggerTileId,
     editingTriggerTileId: mapState.editingTriggerTileId,
     obstructions: toArrayWithId(map.obstructions),
     spawnPoints: toArrayWithId(map.spawnPoints),
-    triggerTiles: toArrayWithId(map.triggerTiles)
+    triggerTiles: toArrayWithId(map.triggerTiles),
+    turnEvents: [
+      {
+        turn: 2,
+        eventName: 'test-turn-2'
+      },
+      {
+        turn: 2,
+        eventName: 'test-turn-2-again'
+      },
+      {
+        turn: 4,
+        eventName: 'die'
+      }
+    ]
   };
 };
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    onTurnEventAdd() {
+      dispatch(Actions.startCreatingNewTurnEvent());
+    },
+
+    onTurnEventCancel() {
+      dispatch(Actions.cancelCreatingNewTurnEvent());
+    },
+
     onObstructionAdd(position) {
       dispatch(Actions.addObstruction(position, ownProps.params.mapId));
     },

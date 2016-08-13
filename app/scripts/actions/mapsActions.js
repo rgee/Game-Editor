@@ -165,6 +165,18 @@ export default {
     };
   },
 
+  startCreatingNewTurnEvent() {
+    return {
+      type: Actions.StartCreatingNewTurnEvent
+    };
+  },
+
+  cancelCreatingNewTurnEvent() {
+    return {
+      type: Actions.CancelCreatingNewTurnEvent
+    };
+  },
+
   startCreatingNewTriggerTile(position) {
     return {
       type: Actions.StartCreatingNewTriggerTile,

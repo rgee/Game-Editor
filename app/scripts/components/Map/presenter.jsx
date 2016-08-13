@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Modes from './modes';
 import CharacterSelector from './CharacterSelector';
 import TriggerEditor from './TriggerEditor';
+import TurnEventEditor from './TurnEventEditor';
 import IconButton from 'material-ui/IconButton';
 import Plus from 'material-ui/svg-icons/content/add-box';
 
@@ -312,8 +313,46 @@ class Map extends React.Component {
     );
   }
 
+  renderTurnEventEditor() {
+    const {
+      isEditingTurnEvent,
+      isCreatingTurnEvent,
+      editingTurnEventId,
+      onTurnEventCancel,
+      onTurnEventEditCancel,
+      onTurnEventSave
+    } = this.props;
+
+    if (!(isEditingTurnEvent || isCreatingTurnEvent)) {
+      return null;
+    }
+
+    if (isEditingTurnEvent) {
+      const initialValues = find(this.props.turnEvents, {
+        id: editingTurnEventId
+      });
+      return (
+        <TurnEventEditor
+          onSubmit={this.handleTurnEventSave.bind(this)}
+          onCancel={onTurnEventEditCancel}
+          onDiscard={this.handleTurnEventDelete.bind(this)}
+          editing={true}
+          initialValues={initialValues}
+        />
+      )
+    }
+
+    return (
+      <TurnEventEditor
+        onSubmit={onTurnEventSave}
+        onCancel={onTurnEventCancel}
+        editing={false}
+      />
+    );
+  }
+
   renderTurnEvents() {
-    const { turnEvents } = this.props;
+    const { turnEvents, onTurnEventAdd } = this.props;
     const eventsByTurn = groupBy(turnEvents, 'turn');
     const turnKeys = keys(eventsByTurn);
     turnKeys.sort();
@@ -355,7 +394,12 @@ class Map extends React.Component {
       <div>
         <h2>
           Turn Events
-          <IconButton style={iconButtonStyles}><Plus /></IconButton>
+          <IconButton
+            style={iconButtonStyles}
+            onTouchTap={onTurnEventAdd}
+          >
+            <Plus />
+          </IconButton>
         </h2>
         <div>
           {events}
@@ -373,6 +417,7 @@ class Map extends React.Component {
         {this.renderTopMenu()}
         {this.renderCharacterSelector()}
         {this.renderTriggerEditor()}
+        {this.renderTurnEventEditor()}
         <canvas
           ref="canvas"
           style={styles}
@@ -398,11 +443,13 @@ Map.PropTypes = {
   onObstructionAdd: PropTypes.func,
   onObstructionRemove: PropTypes.func,
   onNewModeSelected: PropTypes.func,
+
   onSpawnPointAdd: PropTypes.func,
   onSpawnPointRemove: PropTypes.func,
   onSpawnPointCancel: PropTypes.func,
   onNewSpawnPointConfirmed: PropTypes.func,
   isCreatingSpawnPoint: PropTypes.bool,
+
   onTriggerTileAdd: PropTypes.func,
   onTriggerTileCancel: PropTypes.func,
   onTriggerTileEditCancel: PropTypes.func,
@@ -411,19 +458,32 @@ Map.PropTypes = {
   onTriggerDelete: PropTypes.func,
   isCreatingTriggerTile: PropTypes.bool,
   isEditingTriggerTile: PropTypes.bool,
+
+  isEditingTurnEvent: PropTypes.bool,
+  isCreatingTurnEvent: PropTypes.bool,
+  editingTurnEventId: PropTypes.string,
+  onTurnEventAdd: PropTypes.func,
+  onTurnEventCancel: PropTypes.func,
+  onTurnEventEditCancel: PropTypes.func,
+  onTurnEventEditStart: PropTypes.func,
+  onTurnEventSave: PropTypes.func,
+
   turnEvents: PropTypes.arrayOf(PropTypes.shape({
     turn: PropTypes.number,
     eventName: PropTypes.string
   })),
+
   triggerTiles: PropTypes.arrayOf(PropTypes.shape({
     position: PositionPropType,
     eventName: PropTypes.string,
     description: PropTypes.string
   })),
+
   spawnPoints: PropTypes.arrayOf(PropTypes.shape({
     position: PositionPropType,
     characterId: PropTypes.string
   })),
+
   obstructions: PropTypes.arrayOf(PositionPropType)
 };
 

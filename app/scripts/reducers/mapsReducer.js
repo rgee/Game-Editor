@@ -125,6 +125,16 @@ export default (currentState, action) => {
         })
       };
     }
+    case Actions.StartCreatingNewTurnEvent: {
+      return Object.assign({}, currentState, {
+        creatingNewTurnEvent: true
+      });
+    }
+    case Actions.CancelCreatingNewTurnEvent: {
+      return Object.assign({}, currentState, {
+        creatingNewTurnEvent: false
+      });
+    }
     case Actions.SavingNewTriggerTile:
       return Object.assign({}, currentState, {
         state: 'saving'
