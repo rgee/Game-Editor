@@ -162,6 +162,23 @@ export default (currentState, action) => {
       const withoutCreating = omit(currentState, 'creatingNewTurnEvent');
       return addTurnEvent(withoutCreating, action);
     }
+    case Actions.DeletingTurnEvent: {
+      return Object.assign({}, currentState, {
+        state: 'saving'
+      });
+    }
+    case Actions.TurnEventDeleted: {
+      const currentMap = currentState.values[action.mapId];
+      const turnEvents = currentMap.turnEvents;
+      delete turnEvents[action.turnEventId];
+
+      return Object.assign({}, omit(currentState, 'editingTurnEventId'), {
+        state: 'loaded',
+        values: Object.assign({}, currentState.values, {
+          [action.mapId]: currentMap
+        })
+      });
+    }
     case Actions.CancelEditingTurnEvent: {
       return omit(currentState, 'editingTurnEventId');
     }

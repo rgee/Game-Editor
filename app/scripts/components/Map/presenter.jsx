@@ -247,10 +247,11 @@ class Map extends React.Component {
   }
 
   handleTurnEventSave() {
-
+    this.props.onTurnEventEditSave(this.props.editingTurnEventId);
   }
 
   handleTurnEventDelete() {
+    this.props.onTurnEventDelete(this.props.editingTurnEventId);
   }
 
   renderTopMenu() {
@@ -475,10 +476,12 @@ Map.PropTypes = {
   isEditingTurnEvent: PropTypes.bool,
   isCreatingTurnEvent: PropTypes.bool,
   editingTurnEventId: PropTypes.string,
+  onTurnEventDelete: PropTypes.string,
   onTurnEventAdd: PropTypes.func,
   onTurnEventCancel: PropTypes.func,
   onTurnEventEditCancel: PropTypes.func,
   onTurnEventEditStart: PropTypes.func,
+  onTurnEventEditSave: PropTypes.func,
   onTurnEventSave: PropTypes.func,
 
   turnEvents: PropTypes.arrayOf(PropTypes.shape({

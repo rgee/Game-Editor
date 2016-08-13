@@ -71,5 +71,7 @@ export const Actions = {
   StartEditingTurnEvent: 'startEditingTurnEvent',
   CancelEditingTurnEvent: 'cancelEditingTurnEvent',
   SavingNewTurnEvent: 'savingNewTurnEvent',
-  TurnEventSaved: 'turnEventSaved'
+  TurnEventSaved: 'turnEventSaved',
+  DeletingTurnEvent: 'deletingTurnEvent',
+  TurnEventDeleted: 'turnEventDeleted'
 };
