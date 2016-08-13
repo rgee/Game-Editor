@@ -49,23 +49,7 @@ const mapStateToProps = (currentState, ownProps) => {
     obstructions: toArrayWithId(map.obstructions),
     spawnPoints: toArrayWithId(map.spawnPoints),
     triggerTiles: toArrayWithId(map.triggerTiles),
-    turnEvents: [
-      {
-        id: '1',
-        turn: 2,
-        eventName: 'test-turn-2'
-      },
-      {
-        id: '2',
-        turn: 2,
-        eventName: 'test-turn-2-again'
-      },
-      {
-        id: '3',
-        turn: 4,
-        eventName: 'die'
-      }
-    ]
+    turnEvents: toArrayWithId(map.turnEvents)
   };
 };
 
@@ -74,6 +58,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onTurnEventAdd() {
       dispatch(Actions.startCreatingNewTurnEvent());
+    },
+
+    onTurnEventSave(turnEvent) {
+      const { params: { mapId } } = ownProps;
+      dispatch(Actions.saveNewTurnEvent(turnEvent, mapId));
     },
 
     onTurnEventCancel() {

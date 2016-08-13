@@ -282,5 +282,27 @@ export default {
         }
       )
     }
+  },
+
+  saveNewTurnEvent(turnEvent, mapId) {
+    return (dispatch) => {
+      dispatch({ type: Actions.SavingNewTurnEvent });
+
+      const path = `maps/${mapId}/turnEvents`;
+      firebase.database().ref(path).push(turnEvent).then(
+        (savedEvent) => {
+          dispatch({
+            type: Actions.TurnEventSaved,
+            mapId,
+            key: savedEvent.key,
+            turnEvent
+          });
+        },
+
+        (err) => {
+          console.error('Failed to save turn event.', err);
+        }
+      )
+    };
   }
 }

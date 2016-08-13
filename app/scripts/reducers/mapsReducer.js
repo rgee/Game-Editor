@@ -16,6 +16,20 @@ const addTriggerTile = (currentState, action) => {
   });
 };
 
+const addTurnEvent = (currentState, action) => {
+  const currentMap = currentState.values[action.mapId];
+  currentMap.turnEvents = Object.assign({}, currentMap.turnEvents, {
+    [action.key]: action.turnEvent
+  });
+
+  return Object.assign({}, currentState, {
+    state: 'loaded',
+    values: Object.assign({}, currentState.values, {
+      [action.mapId]: currentMap
+    })
+  });
+}
+
 export default (currentState, action) => {
   switch (action.type) {
     case Actions.FetchingMaps:
@@ -139,6 +153,14 @@ export default (currentState, action) => {
       return Object.assign({}, currentState, {
         editingTurnEventId: action.turnEventId
       });
+    }
+    case Actions.SavingNewTurnEvent:
+      return Object.assign({}, currentState, {
+        state: 'saving'
+      });
+    case Actions.TurnEventSaved: {
+      const withoutCreating = omit(currentState, 'creatingNewTurnEvent');
+      return addTurnEvent(withoutCreating, action);
     }
     case Actions.CancelEditingTurnEvent: {
       return omit(currentState, 'editingTurnEventId');
