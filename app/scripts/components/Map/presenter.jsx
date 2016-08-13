@@ -246,6 +246,13 @@ class Map extends React.Component {
     this.props.onTriggerDelete(this.props.editingTriggerTileId);
   }
 
+  handleTurnEventSave() {
+
+  }
+
+  handleTurnEventDelete() {
+  }
+
   renderTopMenu() {
     const { mode } = this.props;
     const styles = {
@@ -352,7 +359,12 @@ class Map extends React.Component {
   }
 
   renderTurnEvents() {
-    const { turnEvents, onTurnEventAdd } = this.props;
+    const {
+      turnEvents,
+      onTurnEventAdd,
+      onTurnEventEditStart
+    } = this.props;
+
     const eventsByTurn = groupBy(turnEvents, 'turn');
     const turnKeys = keys(eventsByTurn);
     turnKeys.sort();
@@ -379,6 +391,7 @@ class Map extends React.Component {
                 key={index}
                 label={event.eventName}
                 style={buttonStyles}
+                onTouchTap={() => onTurnEventEditStart(event.id)}
               />
             )
           })}

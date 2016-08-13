@@ -135,6 +135,14 @@ export default (currentState, action) => {
         creatingNewTurnEvent: false
       });
     }
+    case Actions.StartEditingTurnEvent: {
+      return Object.assign({}, currentState, {
+        editingTurnEventId: action.turnEventId
+      });
+    }
+    case Actions.CancelEditingTurnEvent: {
+      return omit(currentState, 'editingTurnEventId');
+    }
     case Actions.SavingNewTriggerTile:
       return Object.assign({}, currentState, {
         state: 'saving'

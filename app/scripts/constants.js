@@ -67,5 +67,7 @@ export const Actions = {
 
   // Maps - turn events
   StartCreatingNewTurnEvent: 'startCreatingNewTurnEvent',
-  CancelCreatingNewTurnEvent: 'cancelCreatingNewTurnEvent'
+  CancelCreatingNewTurnEvent: 'cancelCreatingNewTurnEvent',
+  StartEditingTurnEvent: 'startEditingTurnEvent',
+  CancelEditingTurnEvent: 'cancelEditingTurnEvent'
 };

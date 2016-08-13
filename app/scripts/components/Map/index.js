@@ -15,6 +15,9 @@ const mapStateToProps = (currentState, ownProps) => {
       widthInTiles: 0,
       heightInTiles: 0,
       mode: mapState.editingMode,
+      isCreatingTurnEvent: mapState.creatingNewTurnEvent,
+      isEditingTurnEvent: !!mapState.editingTurnEventId,
+      editingTurnEventId: mapState.editingTurnEventId,
       isCreatingSpawnPoint: !!mapState.pendingSpawnPosition,
       isCreatingTriggerTile: !!mapState.pendingTriggerTilePosition,
       isEditingTriggerTile: !!mapState.editingTriggerTileId,
@@ -37,6 +40,8 @@ const mapStateToProps = (currentState, ownProps) => {
     heightInTiles: map.height,
     mode: mapState.editingMode,
     isCreatingTurnEvent: mapState.creatingNewTurnEvent,
+    isEditingTurnEvent: !!mapState.editingTurnEventId,
+    editingTurnEventId: mapState.editingTurnEventId,
     isCreatingSpawnPoint: !!mapState.pendingSpawnPosition,
     isCreatingTriggerTile: !!mapState.pendingTriggerTilePosition,
     isEditingTriggerTile: !!mapState.editingTriggerTileId,
@@ -46,14 +51,17 @@ const mapStateToProps = (currentState, ownProps) => {
     triggerTiles: toArrayWithId(map.triggerTiles),
     turnEvents: [
       {
+        id: '1',
         turn: 2,
         eventName: 'test-turn-2'
       },
       {
+        id: '2',
         turn: 2,
         eventName: 'test-turn-2-again'
       },
       {
+        id: '3',
         turn: 4,
         eventName: 'die'
       }
@@ -70,6 +78,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     onTurnEventCancel() {
       dispatch(Actions.cancelCreatingNewTurnEvent());
+    },
+
+    onTurnEventEditStart(turnEventId) {
+      dispatch(Actions.editTurnEvent(turnEventId));
+    },
+
+    onTurnEventEditCancel() {
+      dispatch(Actions.cancelEditingTurnEvent());
     },
 
     onObstructionAdd(position) {

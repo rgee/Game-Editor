@@ -177,6 +177,19 @@ export default {
     };
   },
 
+  cancelEditingTurnEvent() {
+    return {
+      type: Actions.CancelEditingTurnEvent
+    };
+  },
+
+  editTurnEvent(turnEventId) {
+    return {
+      type: Actions.StartEditingTurnEvent,
+      turnEventId
+    };
+  },
+
   startCreatingNewTriggerTile(position) {
     return {
       type: Actions.StartCreatingNewTriggerTile,
