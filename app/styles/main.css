@@ -24,3 +24,19 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+.dialogue-type-selector {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.dialogue-type-selector .dialogue-type {
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.dialogue-type-selector .dialogue-type:hover,
+.dialogue-type-selector .dialogue-type.selected {
+  border: 1px solid rgb(56, 142, 60);
+}

@@ -4,9 +4,10 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
+import DialogueTypeSelector from './DialogueTypeSelector';
 
 const styles = {
-  width: 410
+  width: 456
 };
 
 class NewDialogueForm extends React.Component {
@@ -42,7 +43,11 @@ class NewDialogueForm extends React.Component {
         {
           isLoading ?
           <CircularProgress size={2} /> :
-          <TextField id="displayName" hintText="Display Name" {...displayName} />
+          <div>
+            <TextField id="displayName" hintText="Display Name" {...displayName} />
+            <h4 className="type-header">Type</h4>
+            <DialogueTypeSelector />
+          </div>
         }
       </Dialog>
     );
