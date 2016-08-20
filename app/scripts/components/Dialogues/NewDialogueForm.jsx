@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import DialogueTypeSelector from './DialogueTypeSelector';
+import { DialogueTypes } from '../../constants';
 
 const styles = {
   width: 456
@@ -56,7 +57,10 @@ class NewDialogueForm extends React.Component {
 
 NewDialogueForm = reduxForm({
   form: 'newDialogue',
-  fields: ['displayName', 'type']
+  fields: ['displayName', 'type'],
+  initialValues: {
+    type: DialogueTypes.Single
+  }
 })(NewDialogueForm);
 
 export default NewDialogueForm;
