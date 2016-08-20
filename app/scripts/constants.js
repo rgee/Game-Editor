@@ -77,3 +77,9 @@ export const Actions = {
   UpdatingTurnEvent: 'updatingTurnEvent',
   TurnEventUpdated: 'turnEventUpdated'
 };
+
+export const DialogueTypes = {
+  Single: 'single',
+  Double: 'double',
+  Triple: 'triple'
+};
