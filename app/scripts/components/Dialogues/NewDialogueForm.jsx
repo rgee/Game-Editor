@@ -16,7 +16,7 @@ class NewDialogueForm extends React.Component {
       open,
       isLoading,
       onDiscard,
-      fields: { displayName },
+      fields: { displayName, type },
       handleSubmit
     } = this.props;
 
@@ -46,7 +46,7 @@ class NewDialogueForm extends React.Component {
           <div>
             <TextField id="displayName" hintText="Display Name" {...displayName} />
             <h4 className="type-header">Type</h4>
-            <DialogueTypeSelector />
+            <DialogueTypeSelector {...type} />
           </div>
         }
       </Dialog>
@@ -56,7 +56,7 @@ class NewDialogueForm extends React.Component {
 
 NewDialogueForm = reduxForm({
   form: 'newDialogue',
-  fields: ['displayName']
+  fields: ['displayName', 'type']
 })(NewDialogueForm);
 
 export default NewDialogueForm;
