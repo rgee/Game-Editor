@@ -11,7 +11,8 @@ const mapStateToProps = (currentState, ownProps) => {
   const map = find(maps, { id: ownProps.params.mapId });
   if (!map) {
     return {
-      backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
+      backgroundImageUrl: map.backgroundURL ||
+        'http://i.imgur.com/tIoHnXA.png',
       widthInTiles: 0,
       heightInTiles: 0,
       mode: mapState.editingMode,
@@ -35,7 +36,8 @@ const mapStateToProps = (currentState, ownProps) => {
   }
 
   return {
-    backgroundImageUrl: 'http://i.imgur.com/tIoHnXA.png',
+    backgroundImageUrl: map.backgroundURL ||
+      'http://i.imgur.com/tIoHnXA.png',
     widthInTiles: map.width,
     heightInTiles: map.height,
     mode: mapState.editingMode,

@@ -54,8 +54,12 @@ export default {
       const pathRef = firebase.storage().ref().child(storagePath);
       const uploadTask = pathRef.put(backgroundFile, meta);
       uploadTask.on('state_changed',
-        (snapshot) => {
-          map.backgroundURL = snapshot.downloadURL;
+        (snapshot) => {},
+        console.error,
+        () => {
+          map.backgroundURL = uploadTask.snapshot.downloadURL;
+          
+          delete map.background;
           firebase.database().ref(`maps/${id}`).set(map).then(
             () => {
               dispatch({
@@ -68,8 +72,7 @@ export default {
               console.error('Failed to save new map', error);
             }
           );
-        },
-        console.error
+        }
       );
     };
   },

@@ -11,8 +11,8 @@ import IconButton from 'material-ui/IconButton';
 import Plus from 'material-ui/svg-icons/content/add-box';
 
 
-const canvasWidth = 1280;
-const canvasHeight = 800;
+const maxCanvasWidth = 1280;
+const maxCanvasHeight = 800;
 const speed = 2;
 const tileSize = 32;
 
@@ -191,7 +191,7 @@ class Map extends React.Component {
     const { canvas } = this.refs;
     const ctx = canvas.getContext('2d');
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.clearRect(0, 0, maxCanvasWidth, maxCanvasHeight); 
     ctx.translate(xViewOffset, yViewOffset);
 
     if (backgroundImage) {
@@ -426,6 +426,15 @@ class Map extends React.Component {
     const styles = {
       display: 'block'
     };
+
+    const {
+      widthInTiles,
+      heightInTiles
+    } = this.props;
+
+    const canvasWidth = Math.min(widthInTiles * tileSize, maxCanvasWidth);
+    const canvasHeight = Math.min(heightInTiles * tileSize, maxCanvasHeight);
+
     return (
       <div>
         {this.renderTopMenu()}
