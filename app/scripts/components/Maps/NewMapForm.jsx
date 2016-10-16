@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
+import ImageFileUploader from '../ImageFileUploader';
 
 const styles = {
   width: 410
@@ -15,10 +16,12 @@ class NewMapForm extends React.Component {
       open,
       isLoading,
       onDiscard,
-      fields: { displayName, width, height },
+      fields: { displayName, width, height, background },
       handleSubmit
     } = this.props;
 
+    const backgroundPreviewURL =
+      background.value ? background.value.previewURL : null;
 
     const actions = [
       <FlatButton
@@ -43,6 +46,12 @@ class NewMapForm extends React.Component {
           isLoading ?
           <CircularProgress size={2} /> :
           <div>
+            <ImageFileUploader
+              width={200}
+              height={200}
+              previewURL={backgroundPreviewURL}
+              {...background}
+            />
             <TextField id="displayName" hintText="Display Name" {...displayName} />
             <TextField type="number" hintText="Width" {...width} />
             <TextField type="number" hintText="Height" {...height} />
@@ -55,7 +64,7 @@ class NewMapForm extends React.Component {
 
 NewMapForm = reduxForm({
   form: 'newMap',
-  fields: ['displayName', 'width', 'height']
+  fields: ['displayName', 'background', 'width', 'height']
 })(NewMapForm);
 
 export default NewMapForm;

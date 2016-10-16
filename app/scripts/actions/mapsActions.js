@@ -37,18 +37,40 @@ export default {
         obstructions: {}
       });
 
-      firebase.database().ref(`maps/${id}`).set(map).then(
-        () => {
-          dispatch({
-            type: Actions.NewMapSaved,
-            map
-          });
-        },
+      // Store the image under the map_backgrounds path indexed
+      // by the ID of the map.
+      const storagePath = `map_backgrounds/${map.id}`;
+      map.backgroundPath = storagePath;
 
-        (error) => {
-          console.error('Failed to save new map', error);
-        }
-      )
+      // Set up the actual file object and metadata for Firebase
+      const backgroundFile = map.background.file;
+      const meta = {
+        contentType: backgroundFile.type
+      };
+
+
+      // Upload the file then once that's complete, save the map
+      // with the resulting file's URL attached.
+      const pathRef = firebase.storage().ref().child(storagePath);
+      const uploadTask = pathRef.put(backgroundFile, meta);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          map.backgroundURL = snapshot.downloadURL;
+          firebase.database().ref(`maps/${id}`).set(map).then(
+            () => {
+              dispatch({
+                type: Actions.NewMapSaved,
+                map
+              });
+            },
+
+            (error) => {
+              console.error('Failed to save new map', error);
+            }
+          );
+        },
+        console.error
+      );
     };
   },
 
