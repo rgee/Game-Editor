@@ -22,12 +22,12 @@ class ImageFileUploader extends React.Component {
   }
 
   renderPreview() {
-    const { previewURL } = this.props;
+    const { width, height, previewURL } = this.props;
     if (!previewURL) {
       return null;
     }
 
-    return <img src={previewURL} />;
+    return <img width={width} height={height} src={previewURL} />;
   }
 
   render() {
@@ -43,6 +43,8 @@ class ImageFileUploader extends React.Component {
 ImageFileUploader.PropTypes = {
   onChange: PropTypes.func,
   previewURL: PropTypes.string,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
 }
 
 export default ImageFileUploader;

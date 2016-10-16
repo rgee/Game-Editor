@@ -5,7 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import ImageFileUploader from '../ImageFileUploader';
 
-
 class NewCharacterForm extends React.Component {
   render() {
     const {
@@ -35,7 +34,12 @@ class NewCharacterForm extends React.Component {
         actions={actions}
         open={true}
       >
-        <ImageFileUploader previewURL={previewURL} {...portrait} />
+        <ImageFileUploader
+          width={200}
+          height={200}
+          previewURL={previewURL}
+          {...portrait}
+        />
         <TextField id="name" hintText="Name" {...name} />
       </Dialog>
     );
