@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -17,7 +17,6 @@ class NewDialogueForm extends React.Component {
       open,
       isLoading,
       onDiscard,
-      fields: { displayName, type },
       handleSubmit
     } = this.props;
 
@@ -45,9 +44,21 @@ class NewDialogueForm extends React.Component {
           isLoading ?
           <CircularProgress size={2} /> :
           <div>
-            <TextField id="displayName" hintText="Display Name" {...displayName} />
+            <Field
+              name="displayName"
+              component={(field) => {
+                return (
+                  <TextField id="displayName"
+                    hintText="Display Name"
+                    {...field.input}
+                  />
+                );
+              }}
+            />
             <h4 className="type-header">Type</h4>
-            <DialogueTypeSelector {...type} />
+            <Field
+              component={(field) => <DialogueTypeSelector {...field.input} />}
+            />
           </div>
         }
       </Dialog>
@@ -57,7 +68,6 @@ class NewDialogueForm extends React.Component {
 
 NewDialogueForm = reduxForm({
   form: 'newDialogue',
-  fields: ['displayName', 'type'],
   initialValues: {
     type: DialogueTypes.Single
   }
