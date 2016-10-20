@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import TextFormField from 'components/FormFields/Text';
 import CircularProgress from 'material-ui/CircularProgress';
 import ImageFileUploader from '../ImageFileUploader';
 

@@ -9,7 +9,7 @@ import SingleMap from './Map';
 import Maps from './Maps';
 import Characters from './Characters';
 import Character from './Character';
-import firebase from '../firebase';
+import firebase from 'firebase-client';
 
 class Routes extends React.Component {
   requireAuth(nextState, replace, callback) {

@@ -20,7 +20,6 @@ class NewDialogueForm extends React.Component {
       handleSubmit
     } = this.props;
 
-
     const actions = [
       <FlatButton
         label="Cancel"

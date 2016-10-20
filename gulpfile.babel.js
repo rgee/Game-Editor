@@ -114,6 +114,7 @@ gulp.task('scripts:prod', () =>
       .pipe(webpack({
         resolve: {
           extensions: ['', '.js', '.jsx'],
+          root: path.resolve(__dirname, 'app', 'scripts'),
           alias: {
             firebaseConfig: './config/firebase.production.js',
           }
@@ -150,6 +151,7 @@ gulp.task('scripts:stage', () =>
         devtool: 'source-map',
         resolve: {
           extensions: ['', '.js', '.jsx'],
+          root: path.resolve(__dirname, 'app', 'scripts'),
           alias: {
             firebaseConfig: './config/firebase.staging.js',
           }
@@ -181,6 +183,7 @@ gulp.task('scripts', () =>
         devtool: 'source-map',
         resolve: {
           extensions: ['', '.js', '.jsx'],
+          root: path.resolve(__dirname, 'app', 'scripts'),
           alias: {
             firebaseConfig: './config/firebase.staging.js',
           }
