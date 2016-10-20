@@ -57,6 +57,7 @@ class NewDialogueForm extends React.Component {
             />
             <h4 className="type-header">Type</h4>
             <Field
+              name="type"
               component={(field) => <DialogueTypeSelector {...field.input} />}
             />
           </div>
