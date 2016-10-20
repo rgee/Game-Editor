@@ -7,11 +7,11 @@ class Text extends React.Component {
     const { name, hintText, type } = this.props;
     return (
       <Field
+        name={name}
         component={(field) => {
           return (
             <TextField
               {...field.input}
-              name={name}
               hintText={hintText}
               type={type}
             />
