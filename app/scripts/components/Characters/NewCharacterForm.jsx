@@ -1,16 +1,27 @@
 import React, { PropTypes } from 'react'
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import ImageFileUploader from '../ImageFileUploader';
 
 class NewCharacterForm extends React.Component {
+  renderPortraitUploader(field) {
+    const { input } = field;
+    return (
+      <ImageFileUploader
+        {...input}
+        width={200}
+        height={200}
+        previewURL={input.value.previewURL}
+      />
+    );
+  }
+
   render() {
     const {
       open,
       onNewCharacterDiscarded,
-      fields: { name, portrait },
       handleSubmit
     } = this.props;
 
@@ -25,8 +36,6 @@ class NewCharacterForm extends React.Component {
       />
     ];
 
-    const previewURL = portrait.value ? portrait.value.previewURL : null;
-
     return (
       <Dialog
         title="New Character"
@@ -34,21 +43,29 @@ class NewCharacterForm extends React.Component {
         actions={actions}
         open={true}
       >
-        <ImageFileUploader
-          width={200}
-          height={200}
-          previewURL={previewURL}
-          {...portrait}
-        />
-        <TextField id="name" hintText="Name" {...name} />
+      <Field
+        name="portrait"
+        component={this.renderPortraitUploader}
+      />
+      <Field
+        name="name"
+        component={(field) => {
+          return (
+            <TextField
+              {...field.input}
+              id="name"
+              hintText="Name"
+            />
+          );
+        }}
+      />
       </Dialog>
     );
   }
 }
 
 NewCharacterForm = reduxForm({
-  form: 'newCharacter',
-  fields: ['name', 'portrait']
+  form: 'newCharacter'
 })(NewCharacterForm);
 
 export default NewCharacterForm;
