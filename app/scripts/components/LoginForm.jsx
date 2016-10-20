@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    const { isLoggingIn, fields: { email, password }, handleSubmit } = this.props;
+    const { isLoggingIn, handleSubmit } = this.props;
     const actions = [
       <FlatButton
         label="Submit"
@@ -43,15 +43,15 @@ class LoginForm extends React.Component {
                 id="email"
                 hintText="Email"
                 name="email"
-                type="text"
-                component={renderText}
+                component={this.renderText}
               />
               <br />
-              <TextField
+              <Field
+                name="password"
                 id="password"
                 type="password"
                 hintText="Password"
-                {...password}
+                component={this.renderText}
               />
             </div>
           }
