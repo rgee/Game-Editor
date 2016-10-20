@@ -1,11 +1,22 @@
 import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 
 class LoginForm extends React.Component {
+  renderText(field) {
+    return (
+      <TextField
+        {...field.input}
+        id={field.id}
+        hintText={field.hintText}
+        type={field.type}
+      />
+    );
+  }
+
   render () {
     const { isLoggingIn, fields: { email, password }, handleSubmit } = this.props;
     const actions = [
@@ -28,9 +39,20 @@ class LoginForm extends React.Component {
             isLoggingIn ?
             <CircularProgress size={1.5} /> :
             <div>
-              <TextField id="email" hintText="Email" {...email} />
+              <Field
+                id="email"
+                hintText="Email"
+                name="email"
+                type="text"
+                component={renderText}
+              />
               <br />
-              <TextField id="password" type="password" hintText="Password" {...password} />
+              <TextField
+                id="password"
+                type="password"
+                hintText="Password"
+                {...password}
+              />
             </div>
           }
         </Dialog>
@@ -44,8 +66,7 @@ LoginForm.propTypes = {
 };
 
 LoginForm = reduxForm({
-  form: 'login',
-  fields: ['email', 'password']
+  form: 'login'
 })(LoginForm);
 
 export default LoginForm;
