@@ -1,5 +1,5 @@
 import { Actions } from '../constants';
-import firebase from '../firebase';
+import firebase from 'firebase-client';
 import uuid from 'uuid';
 import { remove } from 'lodash';
 
@@ -58,7 +58,7 @@ export default {
         console.error,
         () => {
           map.backgroundURL = uploadTask.snapshot.downloadURL;
-          
+
           delete map.background;
           firebase.database().ref(`maps/${id}`).set(map).then(
             () => {

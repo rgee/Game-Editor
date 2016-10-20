@@ -1,5 +1,5 @@
 import { Actions } from '../constants';
-import firebase from '../firebase';
+import firebase from 'firebase-client';
 import uuid from 'uuid';
 import { pick } from 'lodash';
 
