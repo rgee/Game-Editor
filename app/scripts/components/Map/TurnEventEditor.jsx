@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import TextFormField from 'components/FormFields/Text';
 import CircularProgress from 'material-ui/CircularProgress';
 
 class TurnEventEditor extends React.Component {
@@ -12,8 +12,7 @@ class TurnEventEditor extends React.Component {
       editing,
       handleSubmit,
       onCancel,
-      onDiscard,
-      fields: { eventName, turn }
+      onDiscard
     } = this.props;
 
     const actions = [
@@ -38,19 +37,23 @@ class TurnEventEditor extends React.Component {
         open={true}
         actions={actions}
       >
-        <div>
-          <TextField style={{ display: 'block' }} type="number" hintText="Turn" {...turn} />
-          <TextField stlye={{ display: 'block' }} hintText="Event Name" {...eventName} />
-        </div>
+        <TextFormField
+          name="turn"
+          style={{ display: 'block' }}
+          type="number"
+          hintText="Turn"
+        />
+        <TextFormField
+          name="eventName"
+          stlye={{ display: 'block' }}
+          hintText="Event Name"
+        />
       </Dialog>
     );
   }
 }
 
-TurnEventEditor = reduxForm({
-  form: 'turnEvent',
-  fields: ['eventName', 'turn']
-})(TurnEventEditor);
+TurnEventEditor = reduxForm({ form: 'turnEvent' })(TurnEventEditor);
 
 TurnEventEditor.PropTypes = {
   editing: PropTypes.bool,
@@ -58,4 +61,4 @@ TurnEventEditor.PropTypes = {
   onCancel: PropTypes.func
 };
 
-export default TurnEventEditor ;
+export default TurnEventEditor;
