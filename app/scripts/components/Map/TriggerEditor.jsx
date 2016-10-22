@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import TextFormField from 'components/FormFields/Text';
 import CircularProgress from 'material-ui/CircularProgress';
 
 class TriggerEditor extends React.Component {
@@ -12,8 +12,7 @@ class TriggerEditor extends React.Component {
       editing,
       handleSubmit,
       onCancel,
-      onDiscard,
-      fields: { eventName, description }
+      onDiscard
     } = this.props;
 
     const actions = [
@@ -38,24 +37,21 @@ class TriggerEditor extends React.Component {
         open={true}
         actions={actions}
       >
-        <div>
-          <TextField hintText="Event Name" {...eventName} />
-          <TextField
-            hintText="Description"
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            {...description}
-          />
-        </div>
+        <TextFormField name="eventName" hintText="Event Name" />
+        <TextFormField
+          name="description"
+          hintText="Description"
+          multiLine={true}
+          rows={2}
+          rowsMax={4}
+        />
       </Dialog>
     );
   }
 }
 
 TriggerEditor = reduxForm({
-  form: 'trigger',
-  fields: ['eventName', 'description']
+  form: 'trigger'
 })(TriggerEditor);
 
 TriggerEditor.PropTypes = {
