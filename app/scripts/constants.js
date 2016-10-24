@@ -33,6 +33,8 @@ export const Actions = {
   // Maps
   FetchingMaps: 'fetchingMaps',
   ReceiveMaps: 'receiveMaps',
+  DeletingMap: 'deletingMap',
+  MapDeleted: 'mapDeleted',
   NewMapSaved: 'newMapSaved',
   SavingNewMap: 'savingNewMap',
   StartCreatingNewMap: 'startCreatingNewMap',

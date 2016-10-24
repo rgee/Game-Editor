@@ -1,6 +1,6 @@
 import { Actions } from '../constants';
 import initialState from '../store/initialstate';
-import { omit } from 'lodash'
+import { omit, remove } from 'lodash'
 
 const addTriggerTile = (currentState, action) => {
   const currentMap = currentState.values[action.mapId];
@@ -75,6 +75,18 @@ export default (currentState, action) => {
         values: Object.assign({}, currentState.values, {
           [action.map.id]: action.map
         })
+      };
+    case Actions.DeletingMap:
+      return {
+        state: 'saving',
+        editingMode: currentState.editingMode,
+        values: currentState.values
+      };
+    case Actions.MapDeleted:
+      return {
+        state: 'loaded',
+        editingMode: currentState.editingMode,
+        values: remove(currentState.values, action.map)
       };
     case Actions.ObstructionAdded: {
       const currentMap = currentState.values[action.mapId];
