@@ -29,6 +29,10 @@ const mapDispatchToProps = (dispatch) => {
 
     onAddClicked() {
       dispatch(Actions.startNewMapCreation());
+    },
+
+    onMapDeleteClicked(map) {
+      dispatch(Actions.deleteMap(map));
     }
   };
 };

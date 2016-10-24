@@ -56,7 +56,7 @@ class Maps extends React.Component {
   }
 
   renderMapsList() {
-    const { maps, isLoading } = this.props;
+    const { maps, isLoading, onMapDeleteClicked } = this.props;
     if (isLoading) {
       return <CircularProgress size={2} />;
     }
@@ -72,12 +72,14 @@ class Maps extends React.Component {
       </IconButton>
     );
 
-    const actionMenu = (
-      <IconMenu iconButtonElement={moreButton}>
-        <MenuItem>Edit Attributes</MenuItem>
-        <MenuItem>Delete</MenuItem>
-      </IconMenu>
-    );
+    const createActionMenu = (map) => {
+      return (
+        <IconMenu iconButtonElement={moreButton}>
+          <MenuItem>Edit Attributes</MenuItem>
+          <MenuItem onTouchTap={() => onMapDeleteClicked(map)}>Delete</MenuItem>
+        </IconMenu>
+      );
+    }
 
     return flatMap(maps, (map, index, collection) => {
       return [
@@ -85,7 +87,7 @@ class Maps extends React.Component {
           key={map.id}
           onTouchTap={this.goToMap.bind(this, map.id)}
           primaryText={map.displayName}
-          rightIconButton={actionMenu}
+          rightIconButton={createActionMenu(map)}
         />,
         <Divider key={index} />
       ];
@@ -114,6 +116,7 @@ Maps.PropTypes = {
   onAddClicked: PropTypes.func,
   onConfirmClicked: PropTypes.func,
   onDiscardClicked: PropTypes.func,
+  onMapDeleteClicked: PropTypes.func,
   fetchMaps: PropTypes.func
 }
 
