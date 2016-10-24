@@ -1,12 +1,20 @@
 import React, { PropTypes } from 'react'
+import { withRouter } from 'react-router';
+
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import { ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
+import IconButton from 'material-ui/IconButton';
+import { grey400 } from 'material-ui/styles/colors';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 import AddButton from '../AddButton';
 import NewMapForm from './NewMapForm';
+
 import { flatMap } from 'lodash';
-import { withRouter } from 'react-router';
 
 const styles = {
   listPaper: {
@@ -57,17 +65,30 @@ class Maps extends React.Component {
       return <h2>No Maps</h2>;
     }
 
+    // The vertical hamburger button to show actions
+    const moreButton = (
+      <IconButton touch={true}>
+        <MoreVertIcon color={grey400} />
+      </IconButton>
+    );
+
+    const actionMenu = (
+      <IconMenu iconButtonElement={moreButton}>
+        <MenuItem>Edit Attributes</MenuItem>
+        <MenuItem>Delete</MenuItem>
+      </IconMenu>
+    );
+
     return flatMap(maps, (map, index, collection) => {
-      const result = [
+      return [
         <ListItem
           key={map.id}
           onTouchTap={this.goToMap.bind(this, map.id)}
           primaryText={map.displayName}
+          rightIconButton={actionMenu}
         />,
         <Divider key={index} />
       ];
-
-      return result;
     });
   }
 
