@@ -26,6 +26,17 @@ export default {
     };
   },
 
+  deleteMap(map) {
+    return (dispatch) => {
+      dispatch({ type: Actions.DeletingMap });
+      const ref = firebase.database().ref(`maps/${map.id}`);
+      ref.remove().then(
+        () => dispatch({ type: Actions.MapDeleted, map }),
+        (error) => console.error(`Failed to delete map: ${error}`)
+      );
+    };
+  },
+
   create(map) {
     return (dispatch) => {
       dispatch({ type: Actions.SavingNewMap });
