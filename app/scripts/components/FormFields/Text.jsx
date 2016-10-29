@@ -16,9 +16,11 @@ class Text extends React.Component {
       <Field
         name={this.props.name}
         component={(field) => {
+          const { meta: { touched, error } } = field;
           return (
             <TextField
               {...field.input}
+              errorText={touched && error ? error : null}
               {...textProps}
             />
           );

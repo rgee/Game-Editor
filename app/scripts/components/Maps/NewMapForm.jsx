@@ -11,6 +11,27 @@ const styles = {
   width: 410
 };
 
+const validate = (values) => {
+  const errors = {};
+  if (!values.id) {
+    errors.id = 'An ID is required.';
+  }
+
+  if (!values.width) {
+    errors.width = 'A width is required.';
+  }
+
+  if (!values.height) {
+    errors.height = 'A height is required.';
+  }
+
+  if (!values.displayName) {
+    errors.displayName = 'A display name is required.';
+  }
+
+  return errors;
+};
+
 class NewMapForm extends React.Component {
   render() {
     const {
@@ -53,6 +74,11 @@ class NewMapForm extends React.Component {
               id="displayName"
               hintText="Display Name"
             />
+            <TextFormField
+              name="id"
+              id="id"
+              hintText="ID"
+            />
             <TextFormField name="width" type="number" hintText="Width" />
             <TextFormField name="height" type="number" hintText="Height" />
           </div>
@@ -63,7 +89,8 @@ class NewMapForm extends React.Component {
 }
 
 NewMapForm = reduxForm({
-  form: 'newMap'
+  form: 'newMap',
+  validate
 })(NewMapForm);
 
 export default NewMapForm;

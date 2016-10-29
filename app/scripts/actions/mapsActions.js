@@ -40,10 +40,8 @@ export default {
   create(map) {
     return (dispatch) => {
       dispatch({ type: Actions.SavingNewMap });
-      const id = uuid.v4();
       const createdOn = new Date().getTime();
       map = Object.assign({}, map, {
-        id,
         createdOn,
         obstructions: {}
       });
@@ -71,7 +69,7 @@ export default {
           map.backgroundURL = uploadTask.snapshot.downloadURL;
 
           delete map.background;
-          firebase.database().ref(`maps/${id}`).set(map).then(
+          firebase.database().ref(`maps/${map.id}`).set(map).then(
             () => {
               dispatch({
                 type: Actions.NewMapSaved,
