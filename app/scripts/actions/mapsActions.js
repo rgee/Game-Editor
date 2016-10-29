@@ -14,6 +14,13 @@ export default {
     };
   },
 
+  editMapAttributes(id) {
+    return {
+      type: Actions.StartEditingMapAttributes,
+      mapId: id
+    };
+  },
+
   load() {
     return (dispatch) => {
       dispatch({ type: Actions.FetchingMaps });
@@ -37,13 +44,15 @@ export default {
     };
   },
 
-  create(map) {
+  save(map) {
     return (dispatch) => {
-      dispatch({ type: Actions.SavingNewMap });
-      const createdOn = new Date().getTime();
+      dispatch({ type: Actions.SavingMap });
+      const createdOn = map.createdOn || new Date().getTime();
       map = Object.assign({}, map, {
         createdOn,
-        obstructions: {}
+        obstructions: {},
+        spawnPoints: {},
+        turnEvents: {}
       });
 
       // Store the image under the map_backgrounds path indexed
@@ -51,44 +60,51 @@ export default {
       const storagePath = `map_backgrounds/${map.id}`;
       map.backgroundPath = storagePath;
 
-      // Set up the actual file object and metadata for Firebase
-      const backgroundFile = map.background.file;
-      const meta = {
-        contentType: backgroundFile.type
+
+      const saveMap = () => {
+        firebase.database().ref(`maps/${map.id}`).set(map).then(
+          () => {
+            dispatch({
+              type: Actions.MapSaved,
+              map
+            });
+          },
+
+          (error) => {
+            console.error('Failed to save new map', error);
+          }
+        );
       };
 
+      const backgroundFile = map.background.file;
+      if (backgroundFile) {
+        // Set up the actual file object and metadata for Firebase
+        const meta = {
+          contentType: backgroundFile.type
+        };
 
-      // Upload the file then once that's complete, save the map
-      // with the resulting file's URL attached.
-      const pathRef = firebase.storage().ref().child(storagePath);
-      const uploadTask = pathRef.put(backgroundFile, meta);
-      uploadTask.on('state_changed',
-        (snapshot) => {},
-        console.error,
-        () => {
-          map.backgroundURL = uploadTask.snapshot.downloadURL;
-
-          delete map.background;
-          firebase.database().ref(`maps/${map.id}`).set(map).then(
-            () => {
-              dispatch({
-                type: Actions.NewMapSaved,
-                map
-              });
-            },
-
-            (error) => {
-              console.error('Failed to save new map', error);
-            }
-          );
-        }
-      );
+        // Upload the file then once that's complete, save the map
+        // with the resulting file's URL attached.
+        const pathRef = firebase.storage().ref().child(storagePath);
+        const uploadTask = pathRef.put(backgroundFile, meta);
+        uploadTask.on('state_changed',
+          (snapshot) => {},
+          console.error,
+          () => {
+            map.backgroundURL = uploadTask.snapshot.downloadURL;
+            delete map.background;
+            saveMap();
+          }
+        );
+      } else {
+        saveMap();
+      }
     };
   },
 
-  discardNewMap() {
+  discardMap() {
     return {
-      type: Actions.DiscardNewMap
+      type: Actions.DiscardMap
     };
   },
 

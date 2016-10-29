@@ -4,12 +4,15 @@ import { values as getValues } from 'lodash';
 import Actions from '../../actions/mapsActions';
 
 const mapStateToProps = (currentState) => {
-  const { maps: { values, state } } = currentState;
+  const { maps: { values, editingMapId, state } } = currentState;
+  const editingMap = editingMapId ? values[editingMapId] : null;
   return {
     isLoading: state === 'loading',
     isSaving: state === 'saving',
     isCreatingNew: state === 'creating_new',
-    maps: getValues(values)
+    isEditing: state === 'editing',
+    maps: getValues(values),
+    editingMap
   };
 };
 
@@ -20,11 +23,19 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     onConfirmClicked(map) {
-      dispatch(Actions.create(map));
+      dispatch(Actions.save(map));
+    },
+
+    onMapEditClicked(map) {
+      dispatch(Actions.editMapAttributes(map.id))
     },
 
     onDiscardClicked() {
-      dispatch(Actions.discardNewMap());
+      dispatch(Actions.discardMap());
+    },
+
+    onEditClicked(map) {
+      dispatch(Actions.startNewMapEditing(map));
     },
 
     onAddClicked() {

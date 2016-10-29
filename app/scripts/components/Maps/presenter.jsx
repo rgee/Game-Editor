@@ -40,15 +40,27 @@ class Maps extends React.Component {
       isCreatingNew,
       onDiscardClicked,
       onConfirmClicked,
-      isSaving
+      isEditing,
+      isSaving,
+      editingMap
     } = this.props;
 
-    if (!(isSaving || isCreatingNew)) {
+    if (!(isSaving || isEditing || isCreatingNew)) {
       return null;
+    }
+
+    const initialValues = editingMap || null;
+    if (initialValues) {
+      initialValues.background = {
+        previewURL: editingMap.backgroundURL
+      };
     }
 
     return (
       <NewMapForm
+        enableReinitialize={true}
+        initialValues={initialValues}
+        isLoading={isSaving}
         onSubmit={onConfirmClicked}
         onDiscard={onDiscardClicked}
       />
@@ -56,7 +68,13 @@ class Maps extends React.Component {
   }
 
   renderMapsList() {
-    const { maps, isLoading, onMapDeleteClicked } = this.props;
+    const {
+      maps,
+      isLoading,
+      onMapEditClicked,
+      onMapDeleteClicked
+    } = this.props;
+
     if (isLoading) {
       return <CircularProgress size={2} />;
     }
@@ -75,7 +93,7 @@ class Maps extends React.Component {
     const createActionMenu = (map) => {
       return (
         <IconMenu iconButtonElement={moreButton}>
-          <MenuItem>Edit Attributes</MenuItem>
+          <MenuItem onTouchTap={() => onMapEditClicked(map)}>Edit Attributes</MenuItem>
           <MenuItem onTouchTap={() => onMapDeleteClicked(map)}>Delete</MenuItem>
         </IconMenu>
       );
@@ -117,6 +135,7 @@ Maps.PropTypes = {
   onConfirmClicked: PropTypes.func,
   onDiscardClicked: PropTypes.func,
   onMapDeleteClicked: PropTypes.func,
+  onMapEditClicked: PropTypes.func,
   fetchMaps: PropTypes.func
 }
 

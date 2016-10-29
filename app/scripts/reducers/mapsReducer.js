@@ -50,9 +50,10 @@ export default (currentState, action) => {
         editingMode: currentState.editingMode,
         values: currentState.values
       };
-    case Actions.DiscardNewMap:
+    case Actions.DiscardMap:
       return {
         state: 'loaded',
+        editingMapId: null,
         editingMode: currentState.editingMode,
         values: currentState.values
       };
@@ -62,16 +63,32 @@ export default (currentState, action) => {
         editingMode: action.newMode,
         values: currentState.values
       };
-    case Actions.SavingNewMap:
+    case Actions.StartEditingMapAttributes:
       return {
-        state: 'saving',
+        state: 'editing',
+        editingMapId: action.mapId,
         editingMode: currentState.editingMode,
         values: currentState.values
       };
-    case Actions.NewMapSaved:
+    case Actions.CancelEditingMapAttributes:
+      return {
+        state: 'loaded',
+        editingMapId: null,
+        editingMode: currentState.editingMode,
+        values: currentState.values
+      };
+    case Actions.SavingMap:
+      return {
+        state: 'saving',
+        editingMapId: null,
+        editingMode: currentState.editingMode,
+        values: currentState.values
+      };
+    case Actions.MapSaved:
       return {
         state: 'loaded',
         editingMode: currentState.editingMode,
+        editingMapId: null,
         values: Object.assign({}, currentState.values, {
           [action.map.id]: action.map
         })
