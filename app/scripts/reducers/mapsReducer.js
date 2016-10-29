@@ -100,10 +100,11 @@ export default (currentState, action) => {
         values: currentState.values
       };
     case Actions.MapDeleted:
+      delete currentState.values[action.map.id];
       return {
         state: 'loaded',
         editingMode: currentState.editingMode,
-        values: remove(currentState.values, action.map)
+        values: currentState.values
       };
     case Actions.ObstructionAdded: {
       const currentMap = currentState.values[action.mapId];

@@ -93,7 +93,9 @@ class Maps extends React.Component {
     const createActionMenu = (map) => {
       return (
         <IconMenu iconButtonElement={moreButton}>
-          <MenuItem onTouchTap={() => onMapEditClicked(map)}>Edit Attributes</MenuItem>
+          <MenuItem onTouchTap={() => onMapEditClicked(map)}>
+            Edit Attributes
+          </MenuItem>
           <MenuItem onTouchTap={() => onMapDeleteClicked(map)}>Delete</MenuItem>
         </IconMenu>
       );
