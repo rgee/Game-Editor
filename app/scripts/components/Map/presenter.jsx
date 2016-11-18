@@ -11,6 +11,10 @@ import IconButton from 'material-ui/IconButton';
 import Plus from 'material-ui/svg-icons/content/add-box';
 
 
+const tileStyles = {
+  obstruction: 'rgba(255, 0, 0 , 0.3)',
+  spawn: 'rgba(0, 255, 0, 0.3)',
+};
 const maxCanvasWidth = 1280;
 const maxCanvasHeight = 800;
 const speed = 2;
@@ -125,7 +129,7 @@ class Map extends React.Component {
       const canvasY = (e.clientY - rect.top) - this.state.yViewOffset;
       const position = {
         x: Math.floor(canvasX / tileSize),
-        y: Math.floor (canvasY / tileSize)
+        y: Math.ceil((rect.height - canvasY) / tileSize)
       };
       this.handleGridClick(position);
     }).bind(this));
@@ -191,12 +195,21 @@ class Map extends React.Component {
     const { canvas } = this.refs;
     const ctx = canvas.getContext('2d');
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, maxCanvasWidth, maxCanvasHeight); 
+    ctx.clearRect(0, 0, maxCanvasWidth, maxCanvasHeight);
     ctx.translate(xViewOffset, yViewOffset);
 
     if (backgroundImage) {
       ctx.drawImage(backgroundImage, 0, 0);
     }
+
+    const drawFilledTile = (x, y, fillStyle) => {
+      ctx.fillStyle = fillStyle;
+
+      // The coordinate system of canvas and the tiles are flipped upside down.
+      // A (0, 0) tile should be drawn in the bottom left of the canvas
+      ctx.fillRect(x * tileSize, maxCanvasHeight - y * tileSize,
+        tileSize, tileSize);
+    };
 
     // Grid Lines
     ctx.strokeStyle = 'rgba(0,0,0,0.7)';
@@ -208,23 +221,21 @@ class Map extends React.Component {
 
     switch (mode) {
       case Modes.Obstructions:
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
         obstructions.forEach(({ x, y }) => {
-          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+          drawFilledTile(x, y, tileStyles.obstruction);
         });
       break;
       case Modes.SpawnPoints:
-        ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
         spawnPoints.forEach((spawnPoint) => {
           const { position: { x, y } } = spawnPoint;
-          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+          drawFilledTile(x, y, tileStyles.spawn);
         });
       break;
       case Modes.Triggers:
         ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
         triggerTiles.forEach((trigger) => {
           const { position: { x, y } } = trigger;
-          ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+          drawFilledTile(x, y, tileStyles.trigger)
         });
       break;
     }
