@@ -14,6 +14,7 @@ import Plus from 'material-ui/svg-icons/content/add-box';
 const tileStyles = {
   obstruction: 'rgba(255, 0, 0 , 0.3)',
   spawn: 'rgba(0, 255, 0, 0.3)',
+  trigger: 'rgba(0, 0, 255, 0.3)'
 };
 const maxCanvasWidth = 1280;
 const maxCanvasHeight = 800;
